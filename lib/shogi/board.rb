@@ -16,5 +16,13 @@ module Shogi
       @position = DEFAULT_POSITION.dup
       @captured = []
     end
+
+    def to_csa
+      @position.map.with_index {|row, i|
+        row.map {|cell|
+          (cell == "") ? " * " : cell
+        }.unshift("P#{i + 1}").join
+      }.join("\n") << "\n"
+    end
   end
 end

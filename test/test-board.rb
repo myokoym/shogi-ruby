@@ -10,4 +10,18 @@ class BoardTest < Test::Unit::TestCase
     assert_equal(9, rows.size)
     assert_true(rows.all? {|row| row.size == 9 })
   end
+
+  def test_to_csa
+    assert_equal(<<-EOT, @board.to_csa)
+P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
+P2 * -HI *  *  *  *  * -KA * 
+P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
+P4 *  *  *  *  *  *  *  *  * 
+P5 *  *  *  *  *  *  *  *  * 
+P6 *  *  *  *  *  *  *  *  * 
+P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
+P8 * +KA *  *  *  *  * +HI * 
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+    EOT
+  end
 end
