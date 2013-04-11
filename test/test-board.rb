@@ -12,6 +12,7 @@ class BoardTest < Test::Unit::TestCase
   end
 
   def test_to_csa
+    before_state = @board.instance_variable_get(:@position).dup
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
 P2 * -HI *  *  *  *  * -KA * 
@@ -23,5 +24,6 @@ P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
 P8 * +KA *  *  *  *  * +HI * 
 P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
     EOT
+    assert_equal(before_state, @board.instance_variable_get(:@position))
   end
 end
