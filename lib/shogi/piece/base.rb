@@ -1,7 +1,7 @@
 module Shogi
   module Piece
     class Base
-      attr_reader :csa, :usi
+      attr_reader :csa, :usi, :promoter
       def initialize(csa, usi, movements, promoter=nil)
         @csa = csa
         @usi = usi

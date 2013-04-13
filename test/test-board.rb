@@ -100,4 +100,23 @@ P+
 P-00KA
     EOT
   end
+
+  def test_move_from_csa_promote
+    @board.move_from_csa("+7776FU")
+    @board.move_from_csa("-3334FU")
+    assert_true(@board.move_from_csa("+8822UM"))
+    assert_equal(<<-EOT, @board.to_csa)
+P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
+P2 * -HI *  *  *  *  * +UM * 
+P3-FU-FU-FU-FU-FU-FU * -FU-FU
+P4 *  *  *  *  *  * -FU *  * 
+P5 *  *  *  *  *  *  *  *  * 
+P6 *  * +FU *  *  *  *  *  * 
+P7+FU+FU * +FU+FU+FU+FU+FU+FU
+P8 *  *  *  *  *  *  * +HI * 
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+P+00KA
+P-
+    EOT
+  end
 end

@@ -81,15 +81,22 @@ module Shogi
           return false
         end
         before_cell = before_piece
+        before_piece = eval("Piece::#{before_cell[1..2]}").new
       else
         before_x = 9 - csa[1].to_i
         before_y = csa[2].to_i - 1
         before_cell = @position[before_y][before_x]
+        return false if before_cell == ""
+        before_piece = eval("Piece::#{before_cell[1..2]}").new
+
         unless csa[0] == before_cell[0]
           return false
         end
         unless csa[5..6] == before_cell[1..2]
-          return false
+          after_piece = eval("Piece::#{csa[5..6]}").new
+          unless before_piece.promoter == after_piece.class
+            return false
+          end
         end
       end
 
@@ -111,7 +118,7 @@ module Shogi
           movement_y = after_y - before_y
         end
 
-        unless eval("Piece::#{csa[5..6]}").new.move?(movement_x, movement_y)
+        unless before_piece.move?(movement_x, movement_y)
           return false
         end
       end
@@ -119,13 +126,13 @@ module Shogi
       unless after_cell == ""
         @captured << "#{csa[0]}#{after_cell[1..2]}"
       end
-      @position[after_y][after_x] = before_cell
+      @position[after_y][after_x] = "#{csa[0]}#{csa[5..6]}"
 
       if csa[1..2] == "00"
         used = nil
 
-        @captured.each_with_index do |piece, i|
-          if piece == before_cell
+        @captured.each_with_index do |captured_piece, i|
+          if captured_piece == before_cell
             used = @captured.delete_at(i)
             break
           end
