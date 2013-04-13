@@ -82,15 +82,15 @@ module Shogi
         end
         before_cell = before_piece
       else
-      before_x = 9 - csa[1].to_i
-      before_y = csa[2].to_i - 1
-      before_cell = @position[before_y][before_x]
-      unless csa[0] == before_cell[0]
-        return false
-      end
-      unless csa[5..6] == before_cell[1..2]
-        return false
-      end
+        before_x = 9 - csa[1].to_i
+        before_y = csa[2].to_i - 1
+        before_cell = @position[before_y][before_x]
+        unless csa[0] == before_cell[0]
+          return false
+        end
+        unless csa[5..6] == before_cell[1..2]
+          return false
+        end
       end
 
       after_x = 9 - csa[3].to_i
@@ -103,17 +103,17 @@ module Shogi
       if csa[1..2] == "00"
         return false unless after_cell == ""
       else
-      if csa[0] == "+"
-        movement_x = after_x - before_x
-        movement_y = before_y - after_y
-      else
-        movement_x = before_x - after_x
-        movement_y = after_y - before_y
-      end
+        if csa[0] == "+"
+          movement_x = after_x - before_x
+          movement_y = before_y - after_y
+        else
+          movement_x = before_x - after_x
+          movement_y = after_y - before_y
+        end
 
-      unless eval("Piece::#{csa[5..6]}").new.move?(movement_x, movement_y)
-        return false
-      end
+        unless eval("Piece::#{csa[5..6]}").new.move?(movement_x, movement_y)
+          return false
+        end
       end
 
       unless after_cell == ""
@@ -135,7 +135,7 @@ module Shogi
           raise Error, "[Bug] missing piece in captured"
         end
       else
-      @position[before_y][before_x] = ""
+        @position[before_y][before_x] = ""
       end
 
       true
