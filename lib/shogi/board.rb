@@ -24,5 +24,24 @@ module Shogi
         }.unshift("P#{i + 1}").join
       }.join("\n") << "\n"
     end
+
+    def to_usi
+      @position.map {|row|
+        usi_row = ""
+        space_count = 0
+        row.each do |cell|
+          if cell == ""
+            space_count += 1
+          else
+            usi_row << space_count.to_s if space_count > 0
+            usi = eval("Piece::#{cell[1..2]}.new").usi
+            usi.downcase! if cell[0] == "-"
+            usi_row << usi
+          end
+        end
+        usi_row << space_count.to_s if space_count > 0
+        usi_row
+      }.join("/") << "\n"
+    end
   end
 end
