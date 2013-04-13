@@ -45,16 +45,20 @@ lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL
     assert_false(@board.move_from_csa("+2726HI"))
     assert_false(@board.move_from_csa("+2827HI"))
     assert_false(@board.move_from_csa("+2625FU"))
-    assert_true(@board.move_from_csa("+2726FU"))
+    assert_false(@board.move_from_csa("+2725FU"))
+    assert_false(@board.move_from_csa("-4131KI"))
+    assert_true(@board.move_from_csa("+7776FU"))
+    assert_true(@board.move_from_csa("-4132KI"))
+    assert_true(@board.move_from_csa("+2868HI"))
     assert_equal(<<-EOT, @board.to_csa)
-P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
-P2 * -HI *  *  *  *  * -KA * 
+P1-KY-KE-GI-KI-OU * -GI-KE-KY
+P2 * -HI *  *  *  * -KI-KA * 
 P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
 P4 *  *  *  *  *  *  *  *  * 
 P5 *  *  *  *  *  *  *  *  * 
-P6 *  *  *  *  *  *  * +FU * 
-P7+FU+FU+FU+FU+FU+FU+FU * +FU
-P8 * +KA *  *  *  *  * +HI * 
+P6 *  * +FU *  *  *  *  *  * 
+P7+FU+FU * +FU+FU+FU+FU+FU+FU
+P8 * +KA * +HI *  *  *  *  * 
 P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
     EOT
   end

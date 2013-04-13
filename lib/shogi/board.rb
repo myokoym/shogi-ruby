@@ -71,6 +71,18 @@ module Shogi
         return false
       end
 
+      if csa[0] == "+"
+        movement_x = after_x - before_x
+        movement_y = before_y - after_y
+      else
+        movement_x = before_x - after_x
+        movement_y = after_y - before_y
+      end
+
+      unless eval("Piece::#{csa[5..6]}").new.move?(movement_x, movement_y)
+        return false
+      end
+
       unless after_cell == ""
         @captured << "#{csa[0]}#{csa[5..6]}"
       end
