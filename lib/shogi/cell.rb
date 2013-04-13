@@ -13,13 +13,13 @@ module Shogi
     }
 
     attr_reader :x, :y
-    attr_reader :piece
-    attr_accessor :upward
-    def initialize(x, y, piece=nil, upward=nil)
+    attr_accessor :piece
+    attr_accessor :turn
+    def initialize(x, y, piece=nil, turn=nil)
       @x = x
       @y = y
       @piece = piece
-      @upward = upward
+      @turn = turn
     end
 
     def place_csa
@@ -32,7 +32,7 @@ module Shogi
 
     def piece_csa
       if @piece
-        "#{upward ? "+" : "-"}#{@piece.csa}"
+        "#{turn ? "+" : "-"}#{@piece.csa}"
       else
         " * "
       end
@@ -40,7 +40,7 @@ module Shogi
 
     def piece_usi
       if @piece
-        if @upward
+        if @turn
           @piece.usi
         else
           @piece.usi.downcase

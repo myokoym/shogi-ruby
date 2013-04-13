@@ -17,13 +17,13 @@ class CellTest < Test::Unit::TestCase
 
   def test_piece_csa
     assert_equal("+FU", @cell.piece_csa)
-    @cell.upward = false
+    @cell.turn = false
     assert_equal("-FU", @cell.piece_csa)
   end
 
   def test_piece_usi
     assert_equal("P", @cell.piece_usi)
-    @cell.upward = false
+    @cell.turn = false
     assert_equal("p", @cell.piece_usi)
   end
 end
