@@ -33,7 +33,10 @@ module Shogi
           if cell == ""
             space_count += 1
           else
-            usi_row << space_count.to_s if space_count > 0
+            if space_count > 0
+              usi_row << space_count.to_s
+              space_count = 0
+            end
             usi = eval("Piece::#{cell[1..2]}.new").usi
             if cell[0] == "-"
               usi_row << usi.downcase
@@ -42,7 +45,10 @@ module Shogi
             end
           end
         end
-        usi_row << space_count.to_s if space_count > 0
+        if space_count > 0
+          usi_row << space_count.to_s
+          space_count = 0
+        end
         usi_row
       }.join("/") << "\n"
     end
