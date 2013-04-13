@@ -35,8 +35,11 @@ module Shogi
           else
             usi_row << space_count.to_s if space_count > 0
             usi = eval("Piece::#{cell[1..2]}.new").usi
-            usi.downcase! if cell[0] == "-"
-            usi_row << usi
+            if cell[0] == "-"
+              usi_row << usi.downcase
+            else
+              usi_row << usi
+            end
           end
         end
         usi_row << space_count.to_s if space_count > 0
