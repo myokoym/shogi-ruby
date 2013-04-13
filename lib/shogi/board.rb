@@ -9,11 +9,19 @@ module Shogi
     end
 
     def to_csa
-      @position.map.with_index {|row, i|
-        row.map {|cell|
-          (cell == "") ? " * " : cell
-        }.unshift("P#{i + 1}").join
-      }.join("\n") << "\n"
+      csa_rows = ""
+      @position.each_with_index do |row, i|
+        csa_row = ""
+        row.each do |cell|
+          if cell == ""
+            csa_row << " * "
+          else
+            csa_row << cell
+          end
+        end
+        csa_rows << "P#{i + 1}#{csa_row}\n"
+      end
+      csa_rows
     end
 
     def to_usi
@@ -28,7 +36,7 @@ module Shogi
               usi_row << space_count.to_s
               space_count = 0
             end
-            usi = eval("Piece::#{cell[1..2]}.new").usi
+            usi = eval("Piece::#{cell[1..2]}").new.usi
             if cell[0] == "-"
               usi_row << usi.downcase
             else
