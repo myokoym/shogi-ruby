@@ -124,7 +124,12 @@ module Shogi
       end
 
       unless after_cell == ""
-        @captured << "#{csa[0]}#{after_cell[1..2]}"
+        after_piece = eval("Piece::#{after_cell[1..2]}").new
+        if after_piece.class.const_defined?(:CHILD)
+          @captured << "#{csa[0]}#{after_piece.class::CHILD}"
+        else
+          @captured << "#{csa[0]}#{after_cell[1..2]}"
+        end
       end
       @position[after_y][after_x] = "#{csa[0]}#{csa[5..6]}"
 

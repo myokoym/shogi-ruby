@@ -13,6 +13,7 @@ module Shogi
       CSA_NAME = "TO"
       USI_NAME = "+P"
       MOVEMENTS = MOVEMENTS_KI
+      CHILD = "FU"
 
       def initialize
         super(CSA_NAME, USI_NAME, MOVEMENTS)
@@ -23,6 +24,7 @@ module Shogi
       CSA_NAME = "NY"
       USI_NAME = "+L"
       MOVEMENTS = MOVEMENTS_KI
+      CHILD = "KY"
 
       def initialize
         super(CSA_NAME, USI_NAME, MOVEMENTS)
@@ -33,6 +35,7 @@ module Shogi
       CSA_NAME = "NK"
       USI_NAME = "+N"
       MOVEMENTS = MOVEMENTS_KI
+      CHILD = "KE"
 
       def initialize
         super(CSA_NAME, USI_NAME, MOVEMENTS)
@@ -43,6 +46,7 @@ module Shogi
       CSA_NAME = "NG"
       USI_NAME = "+S"
       MOVEMENTS = MOVEMENTS_KI
+      CHILD = "GI"
 
       def initialize
         super(CSA_NAME, USI_NAME, MOVEMENTS)
@@ -57,6 +61,7 @@ module Shogi
                    (-8..-1).collect {|a| [a, -a] },
                    ( 1.. 8).collect {|a| [a, -a] },
                    [[-1, 0], [0, -1], [0, 1], [1, 0]]].flatten(1)
+      CHILD = "KA"
 
       def initialize
         super(CSA_NAME, USI_NAME, MOVEMENTS)
@@ -71,6 +76,7 @@ module Shogi
                    (-8..-1).collect {|w| [w, 0] },
                    ( 1.. 8).collect {|w| [w, 0] },
                    [[-1, -1], [-1, 1], [1, -1], [1, 1]]].flatten(1)
+      CHILD = "HI"
 
       def initialize
         super(CSA_NAME, USI_NAME, MOVEMENTS)
