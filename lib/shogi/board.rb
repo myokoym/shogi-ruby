@@ -1,19 +1,7 @@
 module Shogi
   class Board
-    DEFAULT_POSITION = [
-      ["-KY", "-KE", "-GI", "-KI", "-OU", "-KI", "-GI", "-KE", "-KY"],
-      [   "", "-HI",    "",    "",    "",    "",    "", "-KA",    ""],
-      ["-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU"],
-      [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
-      [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
-      [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
-      ["+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU"],
-      [   "", "+KA",    "",    "",    "",    "",    "", "+HI",    ""],
-      ["+KY", "+KE", "+GI", "+KI", "+OU", "+KI", "+GI", "+KE", "+KY"],
-    ]
-
     def initialize
-      @position = DEFAULT_POSITION.dup
+      @position = default_position
       @captured = []
     end
 
@@ -51,6 +39,47 @@ module Shogi
         end
         usi_row
       }.join("/") << "\n"
+    end
+
+    def move_from_csa(csa)
+      before_x = 9 - csa[1].to_i
+      before_y = csa[2].to_i - 1
+      before_cell = @position[before_y][before_x]
+      unless csa[0] == before_cell[0]
+        return false
+      end
+
+      after_x = 9 - csa[3].to_i
+      after_y = csa[4].to_i - 1
+      after_cell = @position[after_y][after_x]
+      if csa[0] == after_cell[0]
+        return false
+      end
+
+      unless csa[5..6] == before_cell[1..2]
+        return false
+      end
+
+      unless after_cell == ""
+        @captured << "#{csa[0]}#{csa[5..6]}"
+      end
+      @position[after_y][after_x] = before_cell
+      @position[before_y][before_x] = ""
+
+      true
+    end
+
+    private
+    def default_position
+      [["-KY", "-KE", "-GI", "-KI", "-OU", "-KI", "-GI", "-KE", "-KY"],
+       [   "", "-HI",    "",    "",    "",    "",    "", "-KA",    ""],
+       ["-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU"],
+       [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
+       [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
+       [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
+       ["+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU"],
+       [   "", "+KA",    "",    "",    "",    "",    "", "+HI",    ""],
+       ["+KY", "+KE", "+GI", "+KI", "+OU", "+KI", "+GI", "+KE", "+KY"]]
     end
   end
 end
