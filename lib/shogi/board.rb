@@ -10,6 +10,7 @@ module Shogi
 
     def to_csa
       csa_rows = ""
+
       @position.each_with_index do |row, i|
         csa_row = ""
         row.each do |cell|
@@ -21,6 +22,19 @@ module Shogi
         end
         csa_rows << "P#{i + 1}#{csa_row}\n"
       end
+
+      sente = "P+"
+      gote = "P-"
+      @captured.each do |piece|
+        if piece[0] == "+"
+          sente << "00#{piece[1..2]}"
+        else
+          gote << "00#{piece[1..2]}"
+        end
+      end
+      csa_rows << "#{sente}\n"
+      csa_rows << "#{gote}\n"
+
       csa_rows
     end
 
@@ -53,7 +67,7 @@ module Shogi
     end
 
     def move_from_csa(csa)
-      unless /\A[+-][1-9]{4}[A-Z]{2}\z/ =~ csa
+      unless /\A[+-](00|[1-9]{2})[1-9]{2}[A-Z]{2}\z/ =~ csa
         raise Error, "Format Error"
       end
 

@@ -23,6 +23,8 @@ P6 *  *  *  *  *  *  *  *  *
 P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
 P8 * +KA *  *  *  *  * +HI * 
 P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+P+
+P-
     EOT
     assert_equal(before_state, @board.instance_variable_get(:@position))
   end
@@ -60,6 +62,8 @@ P6 *  * +FU *  *  *  *  *  *
 P7+FU+FU * +FU+FU+FU+FU+FU+FU
 P8 * +KA * +HI *  *  *  *  * 
 P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+P+
+P-
     EOT
   end
 end
