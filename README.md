@@ -16,6 +16,10 @@ Or install it yourself as:
 
     $ gem install shogi-ruby
 
+## Ruby Version
+
+Ruby 2.0.0 or later. (and 1.9.3)
+
 ## Usage
 
     require 'shogi'
