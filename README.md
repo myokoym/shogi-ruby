@@ -50,7 +50,6 @@ Ruby 2.0.0 or later. (and 1.9.3)
         P+
         P-
 
-    board.move_from_csa("+7776FU")
     board.move_from_csa("-3334FU")
     board.move_from_csa("+8822UM")
     board.to_csa
