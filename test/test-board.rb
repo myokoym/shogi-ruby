@@ -36,6 +36,15 @@ lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL
   end
 
   def test_move_from_csa
+    assert_raise Shogi::Board::Error do
+      @board.move_from_csa("+27FU")
+    end
+    assert_raise Shogi::Board::Error do
+      @board.move_from_csa("+2726AA")
+    end
+    assert_false(@board.move_from_csa("+2726HI"))
+    assert_false(@board.move_from_csa("+2827HI"))
+    assert_false(@board.move_from_csa("+2625FU"))
     assert_true(@board.move_from_csa("+2726FU"))
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY

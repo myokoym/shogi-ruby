@@ -1,5 +1,8 @@
 module Shogi
   class Board
+    class Error < StandardError
+    end
+
     def initialize
       @position = default_position
       @captured = []
@@ -42,6 +45,14 @@ module Shogi
     end
 
     def move_from_csa(csa)
+      unless /\A[+-][1-9]{4}[A-Z]{2}\z/ =~ csa
+        raise Error, "Format Error"
+      end
+
+      unless Piece.const_defined?(csa[5..6])
+        raise Error, "No Defined Piece Error"
+      end
+
       before_x = 9 - csa[1].to_i
       before_y = csa[2].to_i - 1
       before_cell = @position[before_y][before_x]
