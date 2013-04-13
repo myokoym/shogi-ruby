@@ -75,11 +75,22 @@ module Shogi
         raise Error, "No Defined Piece Error"
       end
 
+      if csa[1..2] == "00"
+        before_piece = csa[0] + csa[5..6]
+        unless @captured.include?(before_piece)
+          return false
+        end
+        before_cell = before_piece
+      else
       before_x = 9 - csa[1].to_i
       before_y = csa[2].to_i - 1
       before_cell = @position[before_y][before_x]
       unless csa[0] == before_cell[0]
         return false
+      end
+      unless csa[5..6] == before_cell[1..2]
+        return false
+      end
       end
 
       after_x = 9 - csa[3].to_i
@@ -89,10 +100,9 @@ module Shogi
         return false
       end
 
-      unless csa[5..6] == before_cell[1..2]
-        return false
-      end
-
+      if csa[1..2] == "00"
+        return false unless after_cell == ""
+      else
       if csa[0] == "+"
         movement_x = after_x - before_x
         movement_y = before_y - after_y
@@ -104,12 +114,29 @@ module Shogi
       unless eval("Piece::#{csa[5..6]}").new.move?(movement_x, movement_y)
         return false
       end
+      end
 
       unless after_cell == ""
-        @captured << "#{csa[0]}#{csa[5..6]}"
+        @captured << "#{csa[0]}#{after_cell[1..2]}"
       end
       @position[after_y][after_x] = before_cell
+
+      if csa[1..2] == "00"
+        used = nil
+
+        @captured.each_with_index do |piece, i|
+          if piece == before_cell
+            used = @captured.delete_at(i)
+            break
+          end
+        end
+
+        unless used == before_cell
+          raise Error, "[Bug] missing piece in captured"
+        end
+      else
       @position[before_y][before_x] = ""
+      end
 
       true
     end
