@@ -200,6 +200,32 @@ P-00FU
     EOT
   end
 
+  def test_move_from_csa_lines
+    csa_lines = <<-EOT
++7776FU
+-3334FU
++8822KA
+-3122GI
++0055KA
+    EOT
+
+    @board.move_from_csa_lines(csa_lines)
+
+    assert_equal(<<-EOT, @board.to_csa)
+P1-KY-KE-GI-KI-OU-KI * -KE-KY
+P2 * -HI *  *  *  *  * -GI * 
+P3-FU-FU-FU-FU-FU-FU * -FU-FU
+P4 *  *  *  *  *  * -FU *  * 
+P5 *  *  *  * +KA *  *  *  * 
+P6 *  * +FU *  *  *  *  *  * 
+P7+FU+FU * +FU+FU+FU+FU+FU+FU
+P8 *  *  *  *  *  *  * +HI * 
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+P+
+P-00KA
+    EOT
+  end
+
   def test_validate_movement_false
     assert_true(@board.validate_movement)
     @board.validate_movement = false

@@ -209,6 +209,13 @@ module Shogi
       true
     end
 
+    def move_from_csa_lines(csa_lines)
+      csa_lines.each_line do |csa|
+        csa.chomp!
+        move_from_csa(csa)
+      end
+    end
+
     private
     def default_position
       [["-KY", "-KE", "-GI", "-KI", "-OU", "-KI", "-GI", "-KE", "-KY"],
