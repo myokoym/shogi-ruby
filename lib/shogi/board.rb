@@ -8,8 +8,8 @@ module Shogi
       if csa
         set_from_csa(csa)
       else
-      @position = default_position
-      @captured = []
+        @position = default_position
+        @captured = []
       end
     end
 
