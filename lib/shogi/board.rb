@@ -1,7 +1,8 @@
 module Shogi
   class Board
-    class Error < StandardError
-    end
+    class FormatError < StandardError; end
+    class UndefinedPieceError < StandardError; end
+    class MoveError < StandardError; end
 
     def initialize(csa=nil)
       if csa
@@ -50,7 +51,7 @@ module Shogi
         position_row = []
         row.chomp!
         unless /\AP#{i + 1}(#{cell_pattern}){9}\z/ =~ row
-          raise Error, "Format Error: line #{i + 1}"
+          raise FormatError, "Format Error: line #{i + 1}"
         end
         row[2..28].scan(/#{cell_pattern}/) do |cell|
           position_row << cell
@@ -63,7 +64,7 @@ module Shogi
       csa_lines.slice(9, 2).each do |captured_line|
         captured_line.chomp!
         unless /\AP[+-](00[A-Z]{2})*\z/ =~ captured_line
-          raise Error, "Format Error: captured line"
+          raise FormatError, "Format Error: captured line"
         end
         turn = captured_line[1]
         captured_line[2..-1].scan(/00([A-Z]{2})/) do |cell|
@@ -103,17 +104,17 @@ module Shogi
 
     def move_from_csa(csa)
       unless /\A[+-](00|[1-9]{2})[1-9]{2}[A-Z]{2}\z/ =~ csa
-        raise Error, "Format Error"
+        raise FormatError, "Wrong CSA format: #{csa}"
       end
 
       unless Piece.const_defined?(csa[5..6])
-        raise Error, "No Defined Piece Error"
+        raise UndefinedPieceError, "Undefined piece: #{csa[5..6]}"
       end
 
       if csa[1..2] == "00"
         before_piece = csa[0] + csa[5..6]
         unless @captured.include?(before_piece)
-          return false
+          raise MoveError, "Not captured piece: #{csa}"
         end
         before_cell = before_piece
         before_piece = eval("Piece::#{before_cell[1..2]}").new
@@ -121,26 +122,28 @@ module Shogi
         before_x = 9 - csa[1].to_i
         before_y = csa[2].to_i - 1
         before_cell = @position[before_y][before_x]
-        return false if before_cell == ""
+        if before_cell == ""
+          raise MoveError, "Before cell is blank"
+        end
         before_piece = eval("Piece::#{before_cell[1..2]}").new
 
         unless csa[0] == before_cell[0]
-          return false
+          raise MoveError, "Don't your piece: #{before_cell}"
         end
         unless csa[5..6] == before_cell[1..2]
           after_piece = eval("Piece::#{csa[5..6]}").new
           unless before_piece.promoter == after_piece.class
-            return false
+          raise MoveError, "Don't promote: #{before_cell[1..2]} -> #{csa[5..6]}"
           end
 
           after_y = csa[4].to_i - 1
           if csa[0] == "+"
             unless after_y < 3 || before_y < 3
-              return false
+              raise MoveError, "Don't promote line: #{csa}"
             end
           else
             unless after_y > 6 || before_y > 6
-              return false
+              raise MoveError, "Don't promote line: #{csa}"
             end
           end
         end
@@ -150,11 +153,13 @@ module Shogi
       after_y = csa[4].to_i - 1
       after_cell = @position[after_y][after_x]
       if csa[0] == after_cell[0]
-        return false
+        raise MoveError, "Your piece on after cell: #{csa}"
       end
 
       if csa[1..2] == "00"
-        return false unless after_cell == ""
+        unless after_cell == ""
+          raise MoveError, "Exist piece on after cell"
+        end
       else
         if csa[0] == "+"
           movement_x = after_x - before_x
@@ -165,7 +170,7 @@ module Shogi
         end
 
         unless before_piece.move?(movement_x, movement_y)
-          return false
+          raise MoveError, "Invalid movement"
         end
       end
 

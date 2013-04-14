@@ -74,17 +74,27 @@ lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL
   end
 
   def test_move_from_csa
-    assert_raise Shogi::Board::Error do
+    assert_raise Shogi::Board::FormatError do
       @board.move_from_csa("+27FU")
     end
-    assert_raise Shogi::Board::Error do
+    assert_raise Shogi::Board::UndefinedPieceError do
       @board.move_from_csa("+2726AA")
     end
+    assert_raise Shogi::Board::MoveError do
     assert_false(@board.move_from_csa("+2726HI"))
+    end
+    assert_raise Shogi::Board::MoveError do
     assert_false(@board.move_from_csa("+2827HI"))
+    end
+    assert_raise Shogi::Board::MoveError do
     assert_false(@board.move_from_csa("+2625FU"))
+    end
+    assert_raise Shogi::Board::MoveError do
     assert_false(@board.move_from_csa("+2725FU"))
+    end
+    assert_raise Shogi::Board::MoveError do
     assert_false(@board.move_from_csa("-4131KI"))
+    end
     assert_true(@board.move_from_csa("+7776FU"))
     assert_true(@board.move_from_csa("-4132KI"))
     assert_true(@board.move_from_csa("+2868HI"))
@@ -140,7 +150,9 @@ P-00KA
   def test_move_from_csa_promote
     @board.move_from_csa("+7776FU")
     @board.move_from_csa("-3334FU")
+    assert_raise Shogi::Board::MoveError do
     assert_false(@board.move_from_csa("+2726TO"))
+    end
     assert_true(@board.move_from_csa("+8822UM"))
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
