@@ -89,7 +89,7 @@ lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL
     assert_raise Shogi::Board::MoveError do
       assert_false(@board.move_from_csa("+2625FU"))
     end
-    assert_raise Shogi::Board::MoveError do
+    assert_raise Shogi::Board::MovementError do
       assert_false(@board.move_from_csa("+2725FU"))
     end
     assert_raise Shogi::Board::MoveError do
@@ -150,7 +150,7 @@ P-00KA
   def test_move_from_csa_promote
     @board.move_from_csa("+7776FU")
     @board.move_from_csa("-3334FU")
-    assert_raise Shogi::Board::MoveError do
+    assert_raise Shogi::Board::MovementError do
       assert_false(@board.move_from_csa("+2726TO"))
     end
     assert_true(@board.move_from_csa("+8822UM"))
@@ -198,5 +198,12 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 P+
 P-00FU
     EOT
+  end
+
+  def test_validate_movement_false
+    assert_true(@board.validate_movement)
+    @board.validate_movement = false
+    assert_false(@board.validate_movement)
+    assert_true(@board.move_from_csa("+2755FU"))
   end
 end

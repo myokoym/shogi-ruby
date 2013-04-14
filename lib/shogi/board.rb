@@ -3,7 +3,9 @@ module Shogi
     class FormatError < StandardError; end
     class UndefinedPieceError < StandardError; end
     class MoveError < StandardError; end
+    class MovementError < StandardError; end
 
+    attr_accessor :validate_movement
     def initialize(csa=nil)
       if csa
         set_from_csa(csa)
@@ -11,6 +13,7 @@ module Shogi
         @position = default_position
         @captured = []
       end
+      @validate_movement = true
     end
 
     def to_csa
@@ -139,11 +142,11 @@ module Shogi
           after_y = csa[4].to_i - 1
           if csa[0] == "+"
             unless after_y < 3 || before_y < 3
-              raise MoveError, "Don't promote line: #{csa}"
+              raise_movement_error("Don't promote line: #{csa}")
             end
           else
             unless after_y > 6 || before_y > 6
-              raise MoveError, "Don't promote line: #{csa}"
+              raise_movement_error("Don't promote line: #{csa}")
             end
           end
         end
@@ -170,7 +173,7 @@ module Shogi
         end
 
         unless before_piece.move?(movement_x, movement_y)
-          raise MoveError, "Invalid movement"
+          raise_movement_error("Invalid movement")
         end
       end
 
@@ -215,6 +218,12 @@ module Shogi
        ["+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU"],
        [   "", "+KA",    "",    "",    "",    "",    "", "+HI",    ""],
        ["+KY", "+KE", "+GI", "+KI", "+OU", "+KI", "+GI", "+KE", "+KY"]]
+    end
+
+    def raise_movement_error(message)
+      if @validate_movement
+        raise MovementError, message
+      end
     end
   end
 end
