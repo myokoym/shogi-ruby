@@ -181,5 +181,22 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 P+00KA
 P-00KA
     EOT
+    assert_true(@board.move_from_csa("+0033KA"))
+    assert_true(@board.move_from_csa("-0078KA"))
+    assert_true(@board.move_from_csa("+3366UM"))
+    assert_true(@board.move_from_csa("-7867UM"))
+    assert_equal(<<-EOT, @board.to_csa)
+P1-KY-KE-GI-KI-OU-KI * -KE-KY
+P2 * -HI *  *  *  *  * -GI * 
+P3-FU-FU-FU-FU-FU-FU * -FU-FU
+P4 *  *  *  *  *  * -FU *  * 
+P5 *  *  *  *  *  *  *  *  * 
+P6 *  * +FU+UM *  *  *  *  * 
+P7+FU+FU * -UM+FU+FU+FU+FU+FU
+P8 *  *  *  *  *  *  * +HI * 
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+P+
+P-00FU
+    EOT
   end
 end
