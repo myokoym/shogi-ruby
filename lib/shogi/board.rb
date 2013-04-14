@@ -1,5 +1,6 @@
 module Shogi
   class Board
+    class CodingError < StandardError; end
     class FormatError < StandardError; end
     class UndefinedPieceError < StandardError; end
     class MoveError < StandardError; end
@@ -198,7 +199,7 @@ module Shogi
         end
 
         unless used == before_cell
-          raise Error, "[Bug] missing piece in captured"
+          raise CodingError, "[Bug] missing piece in captured"
         end
       else
         @position[before_y][before_x] = ""
