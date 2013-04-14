@@ -1,5 +1,18 @@
 # Shogi Library for Ruby [![Build Status](https://secure.travis-ci.org/myokoym/shogi-ruby.png?branch=master)](http://travis-ci.org/myokoym/shogi-ruby)
 
+Ruby用の将棋ライブラリです。
+
+## できること
+* CSA形式で、将棋盤オブジェクトを作成、操作、表示できます。
+* 駒の動きが正しいかどうかチェックできます。
+
+## まだできないこと（実装予定）
+* 二歩チェック
+* 行きどころのない駒のチェック
+* 詰みチェック
+* 手番の管理
+* USI形式との相互変換
+
 ## Installation
 
 Add this line to your application's Gemfile:
