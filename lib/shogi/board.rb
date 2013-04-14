@@ -1,10 +1,11 @@
 module Shogi
   class Board
-    class CodingError < StandardError; end
-    class FormatError < StandardError; end
-    class UndefinedPieceError < StandardError; end
-    class MoveError < StandardError; end
-    class MovementError < StandardError; end
+    class Error               < StandardError; end
+    class CodingError         < Error; end
+    class FormatError         < Error; end
+    class UndefinedPieceError < Error; end
+    class MoveError           < Error; end
+    class MovementError       < Error; end
 
     attr_accessor :validate_movement
     def initialize(csa=nil)
