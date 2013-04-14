@@ -29,6 +29,24 @@ P-
     assert_equal(before_state, @board.instance_variable_get(:@position))
   end
 
+  def test_set_from_csa
+    csa = <<-EOT
+P1 *  *  *  * +HI *  * -KE * 
+P2 *  *  *  *  * +KA-OU * -KY
+P3 *  *  *  *  *  * -FU-FU-FU
+P4 *  *  *  * +KY *  * -GI * 
+P5 *  *  *  *  *  *  *  *  * 
+P6 *  *  *  *  *  *  *  *  * 
+P7 *  *  *  *  *  *  *  *  * 
+P8 *  *  *  *  *  *  *  *  * 
+P9 *  *  *  *  *  *  *  *  * 
+P+00HI00GI00KE
+P-
+    EOT
+    @board.set_from_csa(csa)
+    assert_equal(csa, @board.to_csa)
+  end
+
   def test_to_usi
     before_state = @board.instance_variable_get(:@position).dup
     assert_equal(<<-EOT, @board.to_usi)

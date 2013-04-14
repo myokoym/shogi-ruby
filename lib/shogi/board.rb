@@ -38,6 +38,37 @@ module Shogi
       csa_rows
     end
 
+    def set_from_csa(csa)
+      position = []
+      cell_pattern = '[+-][A-Z]{2}| \* '
+      csa_lines = csa.each_line.to_a
+      csa_lines.slice(0, 9).to_enum.with_index do |row, i|
+        position_row = []
+        row.chomp!
+        unless /\AP#{i + 1}(#{cell_pattern}){9}\z/ =~ row
+          raise Error, "Format Error: line #{i + 1}"
+        end
+        row[2..28].scan(/#{cell_pattern}/) do |cell|
+          position_row << cell
+        end
+        position << position_row
+      end
+      @position = position
+
+      captured = []
+      csa_lines.slice(9, 2).each do |captured_line|
+        captured_line.chomp!
+        unless /\AP[+-](00[A-Z]{2})*\z/ =~ captured_line
+          raise Error, "Format Error: captured line"
+        end
+        turn = captured_line[1]
+        captured_line[2..-1].scan(/00([A-Z]{2})/) do |cell|
+          captured << turn + cell[0]
+        end
+      end
+      @captured = captured
+    end
+
     def to_usi
       @position.map {|row|
         usi_row = ""
