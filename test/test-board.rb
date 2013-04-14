@@ -11,6 +11,24 @@ class BoardTest < Test::Unit::TestCase
     assert_true(rows.all? {|row| row.size == 9 })
   end
 
+  def test_initialize_csa
+    csa = <<-EOT
+P1 *  *  *  * +HI *  * -KE * 
+P2 *  *  *  *  * +KA-OU * -KY
+P3 *  *  *  *  *  * -FU-FU-FU
+P4 *  *  *  * +KY *  * -GI * 
+P5 *  *  *  *  *  *  *  *  * 
+P6 *  *  *  *  *  *  *  *  * 
+P7 *  *  *  *  *  *  *  *  * 
+P8 *  *  *  *  *  *  *  *  * 
+P9 *  *  *  *  *  *  *  *  * 
+P+00HI00GI00KE
+P-
+    EOT
+    @board = Shogi::Board.new(csa)
+    assert_equal(csa, @board.to_csa)
+  end
+
   def test_to_csa
     before_state = @board.instance_variable_get(:@position).dup
     assert_equal(<<-EOT, @board.to_csa)

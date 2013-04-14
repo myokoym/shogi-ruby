@@ -3,9 +3,13 @@ module Shogi
     class Error < StandardError
     end
 
-    def initialize
+    def initialize(csa=nil)
+      if csa
+        set_from_csa(csa)
+      else
       @position = default_position
       @captured = []
+      end
     end
 
     def to_csa
