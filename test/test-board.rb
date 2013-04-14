@@ -140,6 +140,7 @@ P-00KA
   def test_move_from_csa_promote
     @board.move_from_csa("+7776FU")
     @board.move_from_csa("-3334FU")
+    assert_false(@board.move_from_csa("+2726TO"))
     assert_true(@board.move_from_csa("+8822UM"))
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY

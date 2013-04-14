@@ -132,6 +132,17 @@ module Shogi
           unless before_piece.promoter == after_piece.class
             return false
           end
+
+          after_y = csa[4].to_i - 1
+          if csa[0] == "+"
+            unless after_y < 3 || before_y < 3
+              return false
+            end
+          else
+            unless after_y > 6 || before_y > 6
+              return false
+            end
+          end
         end
       end
 
