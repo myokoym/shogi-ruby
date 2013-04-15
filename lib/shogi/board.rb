@@ -69,7 +69,7 @@ module Shogi
       csa_lines.slice(9, 2).each do |captured_line|
         captured_line.chomp!
         unless /\AP[+-](00[A-Z]{2})*\z/ =~ captured_line
-          raise FormatError, "Format Error: captured line"
+          raise FormatError, "Format Error: captured piece line"
         end
         turn = captured_line[1]
         captured_line[2..-1].scan(/00([A-Z]{2})/) do |cell|
