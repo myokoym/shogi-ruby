@@ -133,7 +133,7 @@ module Shogi
         before_piece = eval("Piece::#{before_cell[1..2]}").new
 
         unless csa[0] == before_cell[0]
-          raise MoveError, "Don't your piece: #{before_cell}"
+          raise MoveError, "Not your piece: #{before_cell}"
         end
         unless csa[5..6] == before_cell[1..2]
           after_piece = eval("Piece::#{csa[5..6]}").new
@@ -144,11 +144,11 @@ module Shogi
           after_y = csa[4].to_i - 1
           if csa[0] == "+"
             unless after_y < 3 || before_y < 3
-              raise_movement_error("Don't promote line: #{csa}")
+              raise_movement_error("Don't promote this move: #{csa}")
             end
           else
             unless after_y > 6 || before_y > 6
-              raise_movement_error("Don't promote line: #{csa}")
+              raise_movement_error("Don't promote this move: #{csa}")
             end
           end
         end
@@ -175,7 +175,7 @@ module Shogi
         end
 
         unless before_piece.move?(movement_x, movement_y)
-          raise_movement_error("Invalid movement")
+          raise_movement_error("Invalid movement: #{csa}")
         end
       end
 
