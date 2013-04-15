@@ -56,7 +56,7 @@ module Shogi
         position_row = []
         row.chomp!
         unless /\AP#{i + 1}(#{cell_pattern}){9}\z/ =~ row
-          raise FormatError, "Format Error: line #{i + 1}"
+          raise FormatError, "Format Error: line P#{i + 1}"
         end
         row[2..28].scan(/#{cell_pattern}/) do |cell|
           position_row << cell
