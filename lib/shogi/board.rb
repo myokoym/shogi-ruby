@@ -59,7 +59,11 @@ module Shogi
           raise FormatError, "Format Error: line P#{i + 1}"
         end
         row[2..28].scan(/#{cell_pattern}/) do |cell|
-          position_row << cell
+          if cell == " * "
+            position_row << ""
+          else
+            position_row << cell
+          end
         end
         position << position_row
       end

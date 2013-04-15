@@ -63,6 +63,9 @@ P-
     EOT
     @board.set_from_csa(csa)
     assert_equal(csa, @board.to_csa)
+    assert_nothing_raised do
+      @board.move_from_csa("+0031HI")
+    end
   end
 
   def test_to_usi
