@@ -98,9 +98,11 @@ lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL
     assert_raise Shogi::Board::MoveError do
       assert_false(@board.move_from_csa("-4131KI"))
     end
-    assert_true(@board.move_from_csa("+7776FU"))
-    assert_true(@board.move_from_csa("-4132KI"))
-    assert_true(@board.move_from_csa("+2868HI"))
+    assert_nothing_raised do
+      @board.move_from_csa("+7776FU")
+      @board.move_from_csa("-4132KI")
+      @board.move_from_csa("+2868HI")
+    end
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU * -GI-KE-KY
 P2 * -HI *  *  *  * -KI-KA * 
@@ -116,11 +118,32 @@ P-
     EOT
   end
 
+  def test_move_from_csa_chain
+    assert_nothing_raised do
+      @board.move_from_csa("+7776FU").move_from_csa("-4132KI")
+    end
+    assert_equal(<<-EOT, @board.to_csa)
+P1-KY-KE-GI-KI-OU * -GI-KE-KY
+P2 * -HI *  *  *  * -KI-KA * 
+P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
+P4 *  *  *  *  *  *  *  *  * 
+P5 *  *  *  *  *  *  *  *  * 
+P6 *  * +FU *  *  *  *  *  * 
+P7+FU+FU * +FU+FU+FU+FU+FU+FU
+P8 * +KA *  *  *  *  * +HI * 
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+P+
+P-
+    EOT
+  end
+
   def test_move_from_csa_at_captured
-    @board.move_from_csa("+7776FU")
-    @board.move_from_csa("-3334FU")
-    assert_true(@board.move_from_csa("+8822KA"))
-    assert_true(@board.move_from_csa("-3122GI"))
+    assert_nothing_raised do
+      @board.move_from_csa("+7776FU")
+      @board.move_from_csa("-3334FU")
+      @board.move_from_csa("+8822KA")
+      @board.move_from_csa("-3122GI")
+    end
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI * -KE-KY
 P2 * -HI *  *  *  *  * -GI * 
@@ -134,7 +157,9 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 P+00KA
 P-00KA
     EOT
-    assert_true(@board.move_from_csa("+0055KA"))
+    assert_nothing_raised do
+      @board.move_from_csa("+0055KA")
+    end
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI * -KE-KY
 P2 * -HI *  *  *  *  * -GI * 
@@ -156,7 +181,9 @@ P-00KA
     assert_raise Shogi::Board::MovementError do
       assert_false(@board.move_from_csa("+2726TO"))
     end
-    assert_true(@board.move_from_csa("+8822UM"))
+    assert_nothing_raised do
+      @board.move_from_csa("+8822UM")
+    end
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
 P2 * -HI *  *  *  *  * +UM * 
@@ -170,7 +197,9 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 P+00KA
 P-
     EOT
-    assert_true(@board.move_from_csa("-3122GI"))
+    assert_nothing_raised do
+      @board.move_from_csa("-3122GI")
+    end
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI * -KE-KY
 P2 * -HI *  *  *  *  * -GI * 
@@ -184,10 +213,12 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 P+00KA
 P-00KA
     EOT
-    assert_true(@board.move_from_csa("+0033KA"))
-    assert_true(@board.move_from_csa("-0078KA"))
-    assert_true(@board.move_from_csa("+3366UM"))
-    assert_true(@board.move_from_csa("-7867UM"))
+    assert_nothing_raised do
+      @board.move_from_csa("+0033KA")
+      @board.move_from_csa("-0078KA")
+      @board.move_from_csa("+3366UM")
+      @board.move_from_csa("-7867UM")
+    end
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI * -KE-KY
 P2 * -HI *  *  *  *  * -GI * 
@@ -233,6 +264,8 @@ P-00KA
     assert_true(@board.validate_movement)
     @board.validate_movement = false
     assert_false(@board.validate_movement)
-    assert_true(@board.move_from_csa("+2755FU"))
+    assert_nothing_raised do
+      @board.move_from_csa("+2755FU")
+    end
   end
 end

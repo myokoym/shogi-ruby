@@ -212,7 +212,7 @@ module Shogi
         @position[before_y][before_x] = ""
       end
 
-      true
+      self
     end
 
     def move_from_csa_lines(csa_lines)
