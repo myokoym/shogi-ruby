@@ -27,6 +27,22 @@ P-
     EOT
     @board = Shogi::Board.new(:csa, position)
     assert_equal(position, @board.to_csa)
+    assert_nothing_raised do
+      @board.move("+0031HI")
+    end
+    assert_equal(<<-EOT, @board.to_csa)
+P1 *  *  *  * +HI * +HI-KE * 
+P2 *  *  *  *  * +KA-OU * -KY
+P3 *  *  *  *  *  * -FU-FU-FU
+P4 *  *  *  * +KY *  * -GI * 
+P5 *  *  *  *  *  *  *  *  * 
+P6 *  *  *  *  *  *  *  *  * 
+P7 *  *  *  *  *  *  *  *  * 
+P8 *  *  *  *  *  *  *  *  * 
+P9 *  *  *  *  *  *  *  *  * 
+P+00GI00KE
+P-
+    EOT
   end
 
   def test_to_csa
@@ -64,7 +80,7 @@ P-
     @board.set_from_csa(csa)
     assert_equal(csa, @board.to_csa)
     assert_nothing_raised do
-      @board.move_from_csa("+0031HI")
+      @board.move("+0031HI", :csa)
     end
   end
 
@@ -76,33 +92,37 @@ lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL
     assert_equal(before_state, @board.instance_variable_get(:@position))
   end
 
-  def test_move_from_csa
+  def test_move_csa
+    @board.default_format = :csa
+
     assert_raise Shogi::Board::FormatError do
-      @board.move_from_csa("+27FU")
+      @board.move("+27FU")
     end
     assert_raise Shogi::Board::UndefinedPieceError do
-      @board.move_from_csa("+2726AA")
+      @board.move("+2726AA")
     end
     assert_raise Shogi::Board::MoveError do
-      assert_false(@board.move_from_csa("+2726HI"))
+      assert_false(@board.move("+2726HI"))
     end
     assert_raise Shogi::Board::MoveError do
-      assert_false(@board.move_from_csa("+2827HI"))
+      assert_false(@board.move("+2827HI"))
     end
     assert_raise Shogi::Board::MoveError do
-      assert_false(@board.move_from_csa("+2625FU"))
+      assert_false(@board.move("+2625FU"))
     end
     assert_raise Shogi::Board::MovementError do
-      assert_false(@board.move_from_csa("+2725FU"))
+      assert_false(@board.move("+2725FU"))
     end
     assert_raise Shogi::Board::MoveError do
-      assert_false(@board.move_from_csa("-4131KI"))
+      assert_false(@board.move("-4131KI"))
     end
+
     assert_nothing_raised do
-      @board.move_from_csa("+7776FU")
-      @board.move_from_csa("-4132KI")
-      @board.move_from_csa("+2868HI")
+      @board.move("+7776FU")
+      @board.move("-4132KI")
+      @board.move("+2868HI")
     end
+
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU * -GI-KE-KY
 P2 * -HI *  *  *  * -KI-KA * 
@@ -118,9 +138,9 @@ P-
     EOT
   end
 
-  def test_move_from_csa_chain
+  def test_move_csa_chain
     assert_nothing_raised do
-      @board.move_from_csa("+7776FU").move_from_csa("-4132KI")
+      @board.move("+7776FU", :csa).move("-4132KI", :csa)
     end
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU * -GI-KE-KY
@@ -137,12 +157,12 @@ P-
     EOT
   end
 
-  def test_move_from_csa_at_captured
+  def test_move_csa_at_captured
     assert_nothing_raised do
-      @board.move_from_csa("+7776FU")
-      @board.move_from_csa("-3334FU")
-      @board.move_from_csa("+8822KA")
-      @board.move_from_csa("-3122GI")
+      @board.move("+7776FU", :csa)
+      @board.move("-3334FU", :csa)
+      @board.move("+8822KA", :csa)
+      @board.move("-3122GI", :csa)
     end
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI * -KE-KY
@@ -158,7 +178,7 @@ P+00KA
 P-00KA
     EOT
     assert_nothing_raised do
-      @board.move_from_csa("+0055KA")
+      @board.move("+0055KA", :csa)
     end
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI * -KE-KY
@@ -175,14 +195,14 @@ P-00KA
     EOT
   end
 
-  def test_move_from_csa_promote
-    @board.move_from_csa("+7776FU")
-    @board.move_from_csa("-3334FU")
+  def test_move_csa_promote
+    @board.move("+7776FU", :csa)
+    @board.move("-3334FU", :csa)
     assert_raise Shogi::Board::MovementError do
-      assert_false(@board.move_from_csa("+2726TO"))
+      assert_false(@board.move("+2726TO", :csa))
     end
     assert_nothing_raised do
-      @board.move_from_csa("+8822UM")
+      @board.move("+8822UM", :csa)
     end
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
@@ -198,7 +218,7 @@ P+00KA
 P-
     EOT
     assert_nothing_raised do
-      @board.move_from_csa("-3122GI")
+      @board.move("-3122GI", :csa)
     end
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI * -KE-KY
@@ -214,10 +234,10 @@ P+00KA
 P-00KA
     EOT
     assert_nothing_raised do
-      @board.move_from_csa("+0033KA")
-      @board.move_from_csa("-0078KA")
-      @board.move_from_csa("+3366UM")
-      @board.move_from_csa("-7867UM")
+      @board.move("+0033KA", :csa)
+      @board.move("-0078KA", :csa)
+      @board.move("+3366UM", :csa)
+      @board.move("-7867UM", :csa)
     end
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI * -KE-KY
@@ -265,7 +285,7 @@ P-00KA
     @board.validate_movement = false
     assert_false(@board.validate_movement)
     assert_nothing_raised do
-      @board.move_from_csa("+2755FU")
+      @board.move("+2755FU", :csa)
     end
   end
 end

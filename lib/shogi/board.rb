@@ -113,7 +113,36 @@ module Shogi
       }.join("/") << "\n"
     end
 
-    def move_from_csa(csa)
+    def move_from_csa(movement)
+      $stderr.puts "warning: Shogi::Board#move_from_csa(movement) is deplicated. Use Shogi::Board#move(movement, :csa)"
+      move(movement, :csa)
+    end
+
+    def move(movement, format=@default_format)
+      __send__("move_by_#{format.to_s}", movement)
+    end
+
+    def move_from_csa_lines(csa_lines)
+      csa_lines.each_line do |csa|
+        csa.chomp!
+        move_from_csa(csa)
+      end
+    end
+
+    private
+    def default_position
+      [["-KY", "-KE", "-GI", "-KI", "-OU", "-KI", "-GI", "-KE", "-KY"],
+       [   "", "-HI",    "",    "",    "",    "",    "", "-KA",    ""],
+       ["-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU"],
+       [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
+       [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
+       [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
+       ["+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU"],
+       [   "", "+KA",    "",    "",    "",    "",    "", "+HI",    ""],
+       ["+KY", "+KE", "+GI", "+KI", "+OU", "+KI", "+GI", "+KE", "+KY"]]
+    end
+
+    def move_by_csa(csa)
       unless /\A[+-](00|[1-9]{2})[1-9]{2}[A-Z]{2}\z/ =~ csa
         raise FormatError, "Wrong CSA format: #{csa}"
       end
@@ -213,26 +242,6 @@ module Shogi
       end
 
       self
-    end
-
-    def move_from_csa_lines(csa_lines)
-      csa_lines.each_line do |csa|
-        csa.chomp!
-        move_from_csa(csa)
-      end
-    end
-
-    private
-    def default_position
-      [["-KY", "-KE", "-GI", "-KI", "-OU", "-KI", "-GI", "-KE", "-KY"],
-       [   "", "-HI",    "",    "",    "",    "",    "", "-KA",    ""],
-       ["-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU"],
-       [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
-       [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
-       [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
-       ["+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU"],
-       [   "", "+KA",    "",    "",    "",    "",    "", "+HI",    ""],
-       ["+KY", "+KE", "+GI", "+KI", "+OU", "+KI", "+GI", "+KE", "+KY"]]
     end
 
     def raise_movement_error(message)
