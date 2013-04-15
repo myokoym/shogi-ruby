@@ -91,7 +91,7 @@ module Shogi
               usi_row << space_count.to_s
               space_count = 0
             end
-            usi = eval("Piece::#{cell[1..2]}").new.usi
+            usi = Piece.const_get(cell[1..2]).new.usi
             if cell[0] == "-"
               usi_row << usi.downcase
             else
@@ -122,7 +122,7 @@ module Shogi
           raise MoveError, "Not captured piece: #{before_piece}"
         end
         before_cell = before_piece
-        before_piece = eval("Piece::#{before_cell[1..2]}").new
+        before_piece = Piece.const_get(before_cell[1..2]).new
       else
         before_x = 9 - csa[1].to_i
         before_y = csa[2].to_i - 1
@@ -130,13 +130,13 @@ module Shogi
         if before_cell == ""
           raise MoveError, "Before cell is blank"
         end
-        before_piece = eval("Piece::#{before_cell[1..2]}").new
+        before_piece = Piece.const_get(before_cell[1..2]).new
 
         unless csa[0] == before_cell[0]
           raise MoveError, "Not your piece: #{before_cell}"
         end
         unless csa[5..6] == before_cell[1..2]
-          after_piece = eval("Piece::#{csa[5..6]}").new
+          after_piece = Piece.const_get(csa[5..6]).new
           unless before_piece.promoter == after_piece.class
           raise MoveError, "Don't promote: #{before_cell[1..2]} -> #{csa[5..6]}"
           end
@@ -180,7 +180,7 @@ module Shogi
       end
 
       unless after_cell == ""
-        after_piece = eval("Piece::#{after_cell[1..2]}").new
+        after_piece = Piece.const_get(after_cell[1..2]).new
         if after_piece.class.const_defined?(:CHILD)
           @captured << "#{csa[0]}#{after_piece.class::CHILD}"
         else
