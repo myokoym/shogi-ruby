@@ -8,9 +8,9 @@ module Shogi
     class MovementError       < Error; end
 
     attr_accessor :validate_movement
-    def initialize(csa=nil)
-      if csa
-        set_from_csa(csa)
+    def initialize(position=nil)
+      if position
+        set_from_csa(position)
       else
         @position = default_position
         @captured = []
