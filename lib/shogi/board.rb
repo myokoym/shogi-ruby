@@ -119,7 +119,7 @@ module Shogi
       if csa[1..2] == "00"
         before_piece = csa[0] + csa[5..6]
         unless @captured.include?(before_piece)
-          raise MoveError, "Not captured piece: #{csa}"
+          raise MoveError, "Not captured piece: #{before_piece}"
         end
         before_cell = before_piece
         before_piece = eval("Piece::#{before_cell[1..2]}").new
