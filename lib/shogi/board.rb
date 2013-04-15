@@ -118,15 +118,12 @@ module Shogi
       move(movement, :csa)
     end
 
-    def move(movement, format=@default_format)
-      __send__("move_by_#{format.to_s}", movement)
-    end
-
-    def move_from_csa_lines(csa_lines)
-      csa_lines.each_line do |csa|
-        csa.chomp!
-        move_from_csa(csa)
+    def move(movement_lines, format=@default_format)
+      movement_lines.each_line do |movement|
+        movement.chomp!
+        __send__("move_by_#{format.to_s}", movement)
       end
+      self
     end
 
     private

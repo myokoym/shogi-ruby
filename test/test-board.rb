@@ -254,7 +254,7 @@ P-00FU
     EOT
   end
 
-  def test_move_from_csa_lines
+  def test_move_csa_lines
     csa_lines = <<-EOT
 +7776FU
 -3334FU
@@ -263,7 +263,7 @@ P-00FU
 +0055KA
     EOT
 
-    @board.move_from_csa_lines(csa_lines)
+    @board.move(csa_lines, :csa)
 
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI * -KE-KY
