@@ -7,8 +7,10 @@ module Shogi
     class MoveError           < Error; end
     class MovementError       < Error; end
 
+    attr_accessor :default_format
     attr_accessor :validate_movement
-    def initialize(position=nil)
+    def initialize(default_format=:csa, position=nil)
+      @default_format = default_format
       if position
         set_from_csa(position)
       else

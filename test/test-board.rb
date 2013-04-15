@@ -12,7 +12,7 @@ class BoardTest < Test::Unit::TestCase
   end
 
   def test_initialize_csa
-    csa = <<-EOT
+    position = <<-EOT
 P1 *  *  *  * +HI *  * -KE * 
 P2 *  *  *  *  * +KA-OU * -KY
 P3 *  *  *  *  *  * -FU-FU-FU
@@ -25,8 +25,8 @@ P9 *  *  *  *  *  *  *  *  *
 P+00HI00GI00KE
 P-
     EOT
-    @board = Shogi::Board.new(csa)
-    assert_equal(csa, @board.to_csa)
+    @board = Shogi::Board.new(:csa, position)
+    assert_equal(position, @board.to_csa)
   end
 
   def test_to_csa
