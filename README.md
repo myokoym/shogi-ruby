@@ -75,7 +75,7 @@ Ruby 2.0.0 or later. (and 1.9.3)
 
     board.move("-3334FU", :csa)
     board.move("+8822UM", :csa)
-    board.to_csa
+    puts board.to_csa
     #=> P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
         P2 * -HI *  *  *  *  * +UM * 
         P3-FU-FU-FU-FU-FU-FU * -FU-FU
@@ -91,7 +91,7 @@ Ruby 2.0.0 or later. (and 1.9.3)
     board.default_format = :csa
     board.move("-3122GI")
     board.move("+0055KA")
-    board.to_csa
+    board.show
     #=> P1-KY-KE-GI-KI-OU-KI * -KE-KY
         P2 * -HI *  *  *  *  * -GI * 
         P3-FU-FU-FU-FU-FU-FU * -FU-FU

@@ -126,6 +126,10 @@ module Shogi
       self
     end
 
+    def show(format=@default_format)
+      $stdout.puts __send__("to_#{format}")
+    end
+
     private
     def default_position
       [["-KY", "-KE", "-GI", "-KI", "-OU", "-KI", "-GI", "-KE", "-KY"],
