@@ -2,14 +2,14 @@ module Shogi
   class Game
     attr_accessor :default_format
     attr_reader :turn
-    def initialize(format=:csa, turn="+", kifu=[])
+    def initialize(format=:csa, turn="+")
       raise ArgumentError, "Undefined format: #{format}" unless /\Acsa\z/ =~ format
       raise ArgumentError, "Invalid turn: #{turn}" unless /\A[+-]\z/ =~ turn
 
       @default_format = format
       @board = Shogi::Board.new(@default_format)
       @turn = turn
-      @kifu = kifu
+      @kifu = []
     end
 
     def to_csa
