@@ -114,7 +114,7 @@ module Shogi
     end
 
     def move_from_csa(movement)
-      $stderr.puts "warning: Shogi::Board#move_from_csa(movement) is deplicated. Use Shogi::Board#move(movement, :csa)"
+      $stderr.puts "warning: Shogi::Board#move_from_csa(movement) is deprecated. Use Shogi::Board#move(movement, :csa)"
       move(movement, :csa)
     end
 
