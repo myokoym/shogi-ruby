@@ -19,8 +19,8 @@ module Shogi
     def move(movement_lines, format=@default_format)
       movement_lines.each_line do |movement|
         movement.chomp!
-        @kifu << movement
         @board.move(movement, format)
+        @kifu << movement
         @turn = (@turn == "+") ? "-" : "+"
       end
       self
