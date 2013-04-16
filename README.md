@@ -1,6 +1,6 @@
 # Shogi Library for Ruby [![Build Status](https://secure.travis-ci.org/myokoym/shogi-ruby.png?branch=master)](http://travis-ci.org/myokoym/shogi-ruby)
 
-Ruby用の将棋ライブラリです。
+Ruby用の将棋ライブラリです。CSA形式に対応しています。
 
 ## 用途
 ### 向いていること
