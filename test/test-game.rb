@@ -117,4 +117,27 @@ P-
 +8822UM
     EOT
   end
+
+  def test_at
+    @game.default_format = :csa
+    @game.move("+7776FU")
+    @game.move("-3334FU")
+    @game.move("+8822UM")
+    @game.move("-3122GI")
+
+    assert_equal(<<-EOT, @game.at(3).to_csa)
+P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
+P2 * -HI *  *  *  *  * +UM * 
+P3-FU-FU-FU-FU-FU-FU * -FU-FU
+P4 *  *  *  *  *  * -FU *  * 
+P5 *  *  *  *  *  *  *  *  * 
+P6 *  * +FU *  *  *  *  *  * 
+P7+FU+FU * +FU+FU+FU+FU+FU+FU
+P8 *  *  *  *  *  *  * +HI * 
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+P+00KA
+P-
+-
+    EOT
+  end
 end

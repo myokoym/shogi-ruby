@@ -10,6 +10,7 @@ module Shogi
       @board = Shogi::Board.new(@default_format)
       @turn = turn
       @kifu = []
+      @states_of_the_game = [] << Marshal.dump(self)
     end
 
     def to_csa
@@ -22,6 +23,7 @@ module Shogi
         @board.move(movement, format)
         @kifu << movement
         @turn = (@turn == "+") ? "-" : "+"
+        @states_of_the_game << Marshal.dump(self)
       end
       self
     end
@@ -37,6 +39,10 @@ module Shogi
     def show_all(format=@default_format)
       show
       $stdout.puts kifu
+    end
+
+    def at(num_of_moves)
+      Marshal.load(@states_of_the_game[num_of_moves])
     end
   end
 end
