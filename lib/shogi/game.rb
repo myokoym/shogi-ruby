@@ -33,5 +33,10 @@ module Shogi
     def show(format=@default_format)
       $stdout.puts __send__("to_#{format}")
     end
+
+    def show_all(format=@default_format)
+      show
+      $stdout.puts kifu
+    end
   end
 end
