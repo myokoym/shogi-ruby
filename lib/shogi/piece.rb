@@ -33,7 +33,7 @@ module Shogi
       PROMOTER = NK
 
       def initialize
-        super(CSA_NAME, USI_NAME, MOVEMENTS)
+        super(CSA_NAME, USI_NAME, MOVEMENTS, PROMOTER)
       end
     end
 
@@ -48,7 +48,7 @@ module Shogi
       PROMOTER = NG
 
       def initialize
-        super(CSA_NAME, USI_NAME, MOVEMENTS)
+        super(CSA_NAME, USI_NAME, MOVEMENTS, PROMOTER)
       end
     end
 
