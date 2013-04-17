@@ -43,6 +43,32 @@ Ruby 2.0.0 or later. (and 1.9.3)
 
 ## Usage
 
+### Introduction
+
+* 使う準備
+
+        require 'shogi'
+
+* 対局を管理するクラス
+
+        Shogi::Game
+
+* 盤面を管理するクラス
+
+        Shogi::Board
+
+* 局面の情報をCSA形式で取得するメソッド
+
+        Shogi::Game#to_csa
+        Shogi::Board#to_csa
+
+* 駒を動かすメソッド
+
+        Shogi::Game#move
+        Shogi::Board#move
+
+### Tutorial
+
     require 'shogi'
 
     board = Shogi::Board.new
