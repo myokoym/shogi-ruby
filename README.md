@@ -169,7 +169,12 @@ Ruby 2.0.0 or later. (and 1.9.3)
         -3122GI
         +0055KA
 
-    game.at(3).show_all
+    puts game.at(3).kifu
+    #=> +7776FU
+        -3334FU
+        +8822UM
+
+    game.at(3).show
     #=> P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
         P2 * -HI *  *  *  *  * +UM * 
         P3-FU-FU-FU-FU-FU-FU * -FU-FU
@@ -182,9 +187,6 @@ Ruby 2.0.0 or later. (and 1.9.3)
         P+00KA
         P-
         -
-        +7776FU
-        -3334FU
-        +8822UM
 
 ## Contributing
 
