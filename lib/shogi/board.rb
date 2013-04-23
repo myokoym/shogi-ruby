@@ -126,6 +126,12 @@ module Shogi
       self
     end
 
+    def at(place)
+      array_x = shogi_x_to_array_x(place[0].to_i)
+      array_y = shogi_y_to_array_y(place[1].to_i)
+      @position[array_x][array_y]
+    end
+
     def show(format=@default_format)
       $stdout.puts __send__("to_#{format}")
     end
@@ -160,8 +166,8 @@ module Shogi
         before_cell = before_piece
         before_piece = Piece.const_get(before_cell[1..2]).new
       else
-        before_x = 9 - csa[1].to_i
-        before_y = csa[2].to_i - 1
+        before_x = shogi_x_to_array_x(csa[1].to_i)
+        before_y = shogi_y_to_array_y(csa[2].to_i)
         before_cell = @position[before_y][before_x]
         if before_cell == ""
           raise MoveError, "Before cell is blank"
@@ -177,7 +183,7 @@ module Shogi
           raise MoveError, "Don't promote: #{before_cell[1..2]} -> #{csa[5..6]}"
           end
 
-          after_y = csa[4].to_i - 1
+          after_y = shogi_y_to_array_y(csa[4].to_i)
           if csa[0] == "+"
             unless after_y < 3 || before_y < 3
               raise_movement_error("Don't promote this move: #{csa}")
@@ -190,8 +196,8 @@ module Shogi
         end
       end
 
-      after_x = 9 - csa[3].to_i
-      after_y = csa[4].to_i - 1
+      after_x = shogi_x_to_array_x(csa[3].to_i)
+      after_y = shogi_y_to_array_y(csa[4].to_i)
       after_cell = @position[after_y][after_x]
       if csa[0] == after_cell[0]
         raise MoveError, "Your piece on after cell: #{csa}"
@@ -249,6 +255,22 @@ module Shogi
       if @validate_movement
         raise MovementError, message
       end
+    end
+
+    def shogi_x_to_array_x(shogi_x)
+      9 - shogi_x
+    end
+
+    def shogi_y_to_array_y(shogi_y)
+      shogi_y - 1
+    end
+
+    def array_x_to_shogi_x(array_x)
+      9 - array_x
+    end
+
+    def array_y_to_shogi_y(array_y)
+      array_y + 1
     end
   end
 end
