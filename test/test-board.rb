@@ -119,6 +119,10 @@ lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL
     assert_equal(before_state, @board.instance_variable_get(:@position))
   end
 
+  def test_at
+    assert_equal("-KY", @board.at("11"))
+  end
+
   def test_move_csa
     @board.default_format = :csa
 

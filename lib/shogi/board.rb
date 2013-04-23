@@ -129,7 +129,7 @@ module Shogi
     def at(place)
       array_x = shogi_x_to_array_x(place[0].to_i)
       array_y = shogi_y_to_array_y(place[1].to_i)
-      @position[array_x][array_y]
+      @position[array_y][array_x]
     end
 
     def show(format=@default_format)
