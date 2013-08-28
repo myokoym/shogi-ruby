@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Shogi::VERSION
   spec.authors       = ["Masafumi Yokoyama"]
   spec.email         = ["myokoym@gmail.com"]
-  spec.summary       = %q{Shogi Library for Ruby}
-  spec.description   = %q{Shogi library for Ruby. It supports CSA format.}
+  spec.summary       = %q{Shogi Library by Pure Ruby}
+  spec.description   = %q{A Shogi library by pure Ruby. It supports CSA format.}
   spec.homepage      = "https://github.com/myokoym/shogi-ruby"
   spec.license       = "MIT"
 
