@@ -1,6 +1,14 @@
-# Shogi Library for Ruby [![Build Status](https://secure.travis-ci.org/myokoym/shogi-ruby.png?branch=master)](http://travis-ci.org/myokoym/shogi-ruby)
+# Shogi Library by Pure Ruby [![Build Status](https://secure.travis-ci.org/myokoym/shogi-ruby.png?branch=master)](http://travis-ci.org/myokoym/shogi-ruby)
 
-Ruby用の将棋ライブラリです。CSA形式に対応しています。
+Ruby用の将棋ライブラリです。
+
+## 特徴
+
+* Rubyのみで記述されています。
+  * デバッグが楽です。
+  * インストールが楽です。
+* CSA形式に対応しています。
+  * コンピュータ将棋協会が推奨する標準形式です。
 
 ## 用途
 ### 向いていること
