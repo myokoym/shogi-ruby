@@ -189,7 +189,7 @@ module Shogi
               raise_movement_error("Don't promote this move: #{csa}")
             end
           else
-            unless after_y > 6 || before_y > 6
+            unless after_y > 5 || before_y > 5
               raise_movement_error("Don't promote this move: #{csa}")
             end
           end
