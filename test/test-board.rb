@@ -319,4 +319,44 @@ P-00KA
       @board.move("+2755FU", :csa)
     end
   end
+
+  def test_move_csa_promote_to_7
+    position = <<-EOT
+P1 *  *  *  *  *  *  *  *  * 
+P2 *  *  *  *  *  *  *  *  * 
+P3 *  *  *  *  *  *  *  *  * 
+P4 *  *  *  *  *  *  *  *  * 
+P5 *  *  *  *  *  *  *  *  * 
+P6 *  *  *  * -FU *  *  *  * 
+P7 *  *  *  *  *  *  *  *  * 
+P8 *  *  *  *  *  *  *  *  * 
+P9 *  *  *  *  *  *  *  *  * 
+P+
+P-
+    EOT
+    @board = Shogi::Board.new(:csa, position)
+    assert_nothing_raised do
+      @board.move("-5657TO", :csa)
+    end
+  end
+
+  def test_move_csa_promote_from_7
+    position = <<-EOT
+P1 *  *  *  *  *  *  *  *  * 
+P2 *  *  *  *  *  *  *  *  * 
+P3 *  *  *  *  *  *  *  *  * 
+P4 *  *  *  *  *  *  *  *  * 
+P5 *  *  *  *  *  *  *  *  * 
+P6 *  *  *  *  *  *  *  *  * 
+P7 *  *  *  * -GI *  *  *  * 
+P8 *  *  *  *  *  *  *  *  * 
+P9 *  *  *  *  *  *  *  *  * 
+P+
+P-
+    EOT
+    @board = Shogi::Board.new(:csa, position)
+    assert_nothing_raised do
+      @board.move("-5746NG", :csa)
+    end
+  end
 end
