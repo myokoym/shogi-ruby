@@ -47,7 +47,7 @@ Or install it yourself as:
 
 ## Ruby Version
 
-Ruby 2.0.0 or later. (and 1.9.3)
+Ruby 2.0.0 or later.
 
 ## Usage
 
