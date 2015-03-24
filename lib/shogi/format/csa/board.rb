@@ -57,7 +57,7 @@ module Shogi
           csa_lines.slice(9, 2).each do |captured_line|
             captured_line.chomp!
             unless /\AP[+-](00[A-Z]{2})*\z/ =~ captured_line
-              raise FormatError, "Format Error: captured piece line"
+              raise FormatError, "Invalid format: #{captured_line}"
             end
             turn = captured_line[1]
             captured_line[2..-1].scan(/00([A-Z]{2})/) do |cell|
@@ -70,7 +70,7 @@ module Shogi
         private
         def move_by_csa(csa)
           unless /\A[+-](00|[1-9]{2})[1-9]{2}[A-Z]{2}\z/ =~ csa
-            raise FormatError, "Wrong CSA format: #{csa}"
+            raise FormatError, "Invalid CSA format: #{csa}"
           end
 
           unless Piece.const_defined?(csa[5..6])
@@ -99,17 +99,17 @@ module Shogi
             unless csa[5..6] == before_cell[1..2]
               after_piece = Piece.const_get(csa[5..6]).new
               unless before_piece.promoter == after_piece.class
-                raise MoveError, "Don't promote: #{before_cell[1..2]} -> #{csa[5..6]}"
+                raise MoveError, "Can't promote: #{before_cell[1..2]} -> #{csa[5..6]}"
               end
 
               after_y = to_array_y_from_shogi_y(csa[4].to_i)
               if csa[0] == "+"
                 unless after_y < 3 || before_y < 3
-                  raise_movement_error("Don't promote this move: #{csa}")
+                  raise_movement_error("Can't promote: #{csa}")
                 end
               else
                 unless after_y > 5 || before_y > 5
-                  raise_movement_error("Don't promote this move: #{csa}")
+                  raise_movement_error("Can't promote: #{csa}")
                 end
               end
             end
@@ -119,12 +119,12 @@ module Shogi
           after_y = to_array_y_from_shogi_y(csa[4].to_i)
           after_cell = @position[after_y][after_x]
           if csa[0] == after_cell[0]
-            raise MoveError, "Your piece on after cell: #{csa}"
+            raise MoveError, "Your piece exists in the cell: #{csa}"
           end
 
           if csa[1..2] == "00"
             unless after_cell == ""
-              raise MoveError, "Exist piece on after cell"
+              raise MoveError, "A piece exists in the cell: #{csa}"
             end
           else
             if csa[0] == "+"
