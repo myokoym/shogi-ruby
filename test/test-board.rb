@@ -126,25 +126,25 @@ lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL
   def test_move_csa
     @board.default_format = :csa
 
-    assert_raise Shogi::Board::FormatError do
+    assert_raise Shogi::FormatError do
       @board.move("+27FU")
     end
-    assert_raise Shogi::Board::UndefinedPieceError do
+    assert_raise Shogi::UndefinedPieceError do
       @board.move("+2726AA")
     end
-    assert_raise Shogi::Board::MoveError do
+    assert_raise Shogi::MoveError do
       assert_false(@board.move("+2726HI"))
     end
-    assert_raise Shogi::Board::MoveError do
+    assert_raise Shogi::MoveError do
       assert_false(@board.move("+2827HI"))
     end
-    assert_raise Shogi::Board::MoveError do
+    assert_raise Shogi::MoveError do
       assert_false(@board.move("+2625FU"))
     end
-    assert_raise Shogi::Board::MovementError do
+    assert_raise Shogi::MovementError do
       assert_false(@board.move("+2725FU"))
     end
-    assert_raise Shogi::Board::MoveError do
+    assert_raise Shogi::MoveError do
       assert_false(@board.move("-4131KI"))
     end
 
@@ -229,7 +229,7 @@ P-00KA
   def test_move_csa_promote
     @board.move("+7776FU", :csa)
     @board.move("-3334FU", :csa)
-    assert_raise Shogi::Board::MovementError do
+    assert_raise Shogi::MovementError do
       assert_false(@board.move("+2726TO", :csa))
     end
     assert_nothing_raised do
