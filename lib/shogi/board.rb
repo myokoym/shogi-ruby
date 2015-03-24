@@ -180,7 +180,7 @@ module Shogi
         unless csa[5..6] == before_cell[1..2]
           after_piece = Piece.const_get(csa[5..6]).new
           unless before_piece.promoter == after_piece.class
-          raise MoveError, "Don't promote: #{before_cell[1..2]} -> #{csa[5..6]}"
+            raise MoveError, "Don't promote: #{before_cell[1..2]} -> #{csa[5..6]}"
           end
 
           after_y = to_array_y_from_shogi_y(csa[4].to_i)
