@@ -1,5 +1,5 @@
-require "shogi/csa/board"
-require "shogi/usi/board"
+require "shogi/format/csa/board"
+require "shogi/format/usi/board"
 
 module Shogi
   class Error               < StandardError; end
@@ -10,8 +10,8 @@ module Shogi
   class MovementError       < Error; end
 
   class Board
-    include CSA::Board
-    include USI::Board
+    include Format::CSA::Board
+    include Format::USI::Board
 
     attr_accessor :default_format
     attr_accessor :validate_movement

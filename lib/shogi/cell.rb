@@ -1,10 +1,10 @@
-require "shogi/csa/cell"
-require "shogi/usi/cell"
+require "shogi/format/csa/cell"
+require "shogi/format/usi/cell"
 
 module Shogi
   class Cell
-    include CSA::Cell
-    include USI::Cell
+    include Format::CSA::Cell
+    include Format::USI::Cell
 
     attr_reader :x, :y
     attr_accessor :piece
