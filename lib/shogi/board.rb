@@ -113,11 +113,6 @@ module Shogi
       }.join("/") << "\n"
     end
 
-    def move_from_csa(movement)
-      $stderr.puts "warning: Shogi::Board#move_from_csa(movement) is deprecated. Use Shogi::Board#move(movement, :csa)"
-      move(movement, :csa)
-    end
-
     def move(movement_lines, format=@default_format)
       movement_lines.each_line do |movement|
         movement.chomp!
