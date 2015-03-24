@@ -1,7 +1,9 @@
+require "shogi/csa/cell"
 require "shogi/usi/cell"
 
 module Shogi
   class Cell
+    include CSA::Cell
     include USI::Cell
 
     attr_reader :x, :y
@@ -12,18 +14,6 @@ module Shogi
       @y = y
       @piece = piece
       @turn = turn
-    end
-
-    def place_csa
-      "#{x}#{y}"
-    end
-
-    def piece_csa
-      if @piece
-        "#{turn ? "+" : "-"}#{@piece.csa}"
-      else
-        " * "
-      end
     end
   end
 end
