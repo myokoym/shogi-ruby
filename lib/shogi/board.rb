@@ -1,3 +1,5 @@
+require "shogi/usi/board"
+
 module Shogi
   class Board
     class Error               < StandardError; end
@@ -6,6 +8,8 @@ module Shogi
     class UndefinedPieceError < Error; end
     class MoveError           < Error; end
     class MovementError       < Error; end
+
+    include USI::Board
 
     attr_accessor :default_format
     attr_accessor :validate_movement
@@ -83,34 +87,6 @@ module Shogi
         end
       end
       @captured = captured
-    end
-
-    def to_usi
-      @position.map {|row|
-        usi_row = ""
-        space_count = 0
-        row.each do |cell|
-          if cell == ""
-            space_count += 1
-          else
-            if space_count > 0
-              usi_row << space_count.to_s
-              space_count = 0
-            end
-            usi = Piece.const_get(cell[1..2]).new.usi
-            if cell[0] == "-"
-              usi_row << usi.downcase
-            else
-              usi_row << usi
-            end
-          end
-        end
-        if space_count > 0
-          usi_row << space_count.to_s
-          space_count = 0
-        end
-        usi_row
-      }.join("/") << "\n"
     end
 
     def move(movement_lines, format=@default_format)
