@@ -10,8 +10,11 @@ module Shogi
   class MovementError       < Error; end
 
   class Board
-    include Format::CSA::Board
-    include Format::USI::Board
+    def self.register(name)
+      send(:include, Format.const_get(name).const_get("Board"))
+    end
+    self.register("CSA")
+    self.register("USI")
 
     attr_accessor :default_format
     attr_accessor :validate_movement

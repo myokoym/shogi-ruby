@@ -3,8 +3,11 @@ require "shogi/format/usi/cell"
 
 module Shogi
   class Cell
-    include Format::CSA::Cell
-    include Format::USI::Cell
+    def self.register(name)
+      send(:include, Format.const_get(name).const_get("Cell"))
+    end
+    self.register("CSA")
+    self.register("USI")
 
     attr_reader :x, :y
     attr_accessor :piece
