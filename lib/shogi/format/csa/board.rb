@@ -5,7 +5,7 @@ module Shogi
         def to_csa
           csa_rows = ""
 
-          @position.each_with_index do |row, i|
+          @table.each_with_index do |row, i|
             csa_row = ""
             row.each do |cell|
               if cell == ""
@@ -33,25 +33,25 @@ module Shogi
         end
 
         def set_from_csa(csa)
-          position = []
+          table = []
           cell_pattern = '[+-][A-Z]{2}| \* '
           csa_lines = csa.each_line.to_a
           csa_lines.slice(0, 9).to_enum.with_index do |row, i|
-            position_row = []
+            table_row = []
             row.chomp!
             unless /\AP#{i + 1}(#{cell_pattern}){9}\z/ =~ row
               raise FormatError, "Format Error: line P#{i + 1}"
             end
             row[2..28].scan(/#{cell_pattern}/) do |cell|
               if cell == " * "
-                position_row << ""
+                table_row << ""
               else
-                position_row << cell
+                table_row << cell
               end
             end
-            position << position_row
+            table << table_row
           end
-          @position = position
+          @table = table
 
           captured = []
           csa_lines.slice(9, 2).each do |captured_line|
@@ -87,7 +87,7 @@ module Shogi
           else
             before_x = to_array_x_from_shogi_x(csa[1].to_i)
             before_y = to_array_y_from_shogi_y(csa[2].to_i)
-            before_cell = @position[before_y][before_x]
+            before_cell = @table[before_y][before_x]
             if before_cell == ""
               raise MoveError, "Before cell is blank"
             end
@@ -117,7 +117,7 @@ module Shogi
 
           after_x = to_array_x_from_shogi_x(csa[3].to_i)
           after_y = to_array_y_from_shogi_y(csa[4].to_i)
-          after_cell = @position[after_y][after_x]
+          after_cell = @table[after_y][after_x]
           if csa[0] == after_cell[0]
             raise MoveError, "Your piece exists in the cell: #{csa}"
           end
@@ -148,7 +148,7 @@ module Shogi
               @captured << "#{csa[0]}#{after_cell[1..2]}"
             end
           end
-          @position[after_y][after_x] = "#{csa[0]}#{csa[5..6]}"
+          @table[after_y][after_x] = "#{csa[0]}#{csa[5..6]}"
 
           if csa[1..2] == "00"
             used = nil
@@ -164,7 +164,7 @@ module Shogi
               raise CodingError, "[Bug] missing piece in captured"
             end
           else
-            @position[before_y][before_x] = ""
+            @table[before_y][before_x] = ""
           end
 
           self

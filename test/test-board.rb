@@ -7,13 +7,13 @@ class BoardTest < Test::Unit::TestCase
   end
 
   def test_initialize
-    rows = @board.instance_variable_get(:@position)
+    rows = @board.instance_variable_get(:@table)
     assert_equal(9, rows.size)
     assert_true(rows.all? {|row| row.size == 9 })
   end
 
   def test_initialize_csa
-    position = <<-EOT
+    table = <<-EOT
 P1 *  *  *  * +HI *  * -KE * 
 P2 *  *  *  *  * +KA-OU * -KY
 P3 *  *  *  *  *  * -FU-FU-FU
@@ -26,8 +26,8 @@ P9 *  *  *  *  *  *  *  *  *
 P+00HI00GI00KE
 P-
     EOT
-    @board = Shogi::Board.new(:csa, position)
-    assert_equal(position, @board.to_csa)
+    @board = Shogi::Board.new(:csa, table)
+    assert_equal(table, @board.to_csa)
     assert_nothing_raised do
       @board.move("+0031HI")
     end
@@ -47,7 +47,7 @@ P-
   end
 
   def test_to_csa
-    before_state = @board.instance_variable_get(:@position).dup
+    before_state = @board.instance_variable_get(:@table).dup
     assert_equal(<<-EOT, @board.to_csa)
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
 P2 * -HI *  *  *  *  * -KA * 
@@ -61,11 +61,11 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 P+
 P-
     EOT
-    assert_equal(before_state, @board.instance_variable_get(:@position))
+    assert_equal(before_state, @board.instance_variable_get(:@table))
   end
 
   def test_show
-    before_state = @board.instance_variable_get(:@position).dup
+    before_state = @board.instance_variable_get(:@table).dup
     s = ""
     io = StringIO.new(s)
     $stdout = io
@@ -87,7 +87,7 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 P+
 P-
     EOT
-    assert_equal(before_state, @board.instance_variable_get(:@position))
+    assert_equal(before_state, @board.instance_variable_get(:@table))
   end
 
   def test_set_from_csa
@@ -112,11 +112,11 @@ P-
   end
 
   def test_to_usi
-    before_state = @board.instance_variable_get(:@position).dup
+    before_state = @board.instance_variable_get(:@table).dup
     assert_equal(<<-EOT, @board.to_usi)
 lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL
     EOT
-    assert_equal(before_state, @board.instance_variable_get(:@position))
+    assert_equal(before_state, @board.instance_variable_get(:@table))
   end
 
   def test_at
@@ -321,7 +321,7 @@ P-00KA
   end
 
   def test_move_csa_promote_to_7
-    position = <<-EOT
+    table = <<-EOT
 P1 *  *  *  *  *  *  *  *  * 
 P2 *  *  *  *  *  *  *  *  * 
 P3 *  *  *  *  *  *  *  *  * 
@@ -334,14 +334,14 @@ P9 *  *  *  *  *  *  *  *  *
 P+
 P-
     EOT
-    @board = Shogi::Board.new(:csa, position)
+    @board = Shogi::Board.new(:csa, table)
     assert_nothing_raised do
       @board.move("-5657TO", :csa)
     end
   end
 
   def test_move_csa_promote_from_7
-    position = <<-EOT
+    table = <<-EOT
 P1 *  *  *  *  *  *  *  *  * 
 P2 *  *  *  *  *  *  *  *  * 
 P3 *  *  *  *  *  *  *  *  * 
@@ -354,7 +354,7 @@ P9 *  *  *  *  *  *  *  *  *
 P+
 P-
     EOT
-    @board = Shogi::Board.new(:csa, position)
+    @board = Shogi::Board.new(:csa, table)
     assert_nothing_raised do
       @board.move("-5746NG", :csa)
     end

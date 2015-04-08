@@ -18,12 +18,12 @@ module Shogi
 
     attr_accessor :default_format
     attr_accessor :validate_movement
-    def initialize(default_format=:csa, position=nil)
+    def initialize(default_format=:csa, table=nil)
       @default_format = default_format
-      if position
-        set_from_csa(position)
+      if table
+        set_from_csa(table)
       else
-        @position = default_position
+        @table = default_table
         @captured = []
       end
       @validate_movement = true
@@ -40,7 +40,7 @@ module Shogi
     def at(place)
       array_x = to_array_x_from_shogi_x(place[0].to_i)
       array_y = to_array_y_from_shogi_y(place[1].to_i)
-      @position[array_y][array_x]
+      @table[array_y][array_x]
     end
 
     def show(format=@default_format)
@@ -48,7 +48,7 @@ module Shogi
     end
 
     private
-    def default_position
+    def default_table
       [["-KY", "-KE", "-GI", "-KI", "-OU", "-KI", "-GI", "-KE", "-KY"],
        [   "", "-HI",    "",    "",    "",    "",    "", "-KA",    ""],
        ["-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU"],

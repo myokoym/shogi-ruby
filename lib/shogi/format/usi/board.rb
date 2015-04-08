@@ -3,7 +3,7 @@ module Shogi
     module USI
       module Board
         def to_usi
-          @position.map {|row|
+          @table.map {|row|
             usi_row = ""
             space_count = 0
             row.each do |cell|
