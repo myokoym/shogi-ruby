@@ -24,6 +24,10 @@ module Shogi
       @validate_movement = true
     end
 
+    def set_from_csa(csa)
+      @table, @captured = parse_from_csa(csa)
+    end
+
     def move(movement_lines, format=@default_format)
       movement_lines.each_line do |movement|
         movement.chomp!

@@ -32,7 +32,7 @@ module Shogi
           csa_rows
         end
 
-        def set_from_csa(csa)
+        def parse_from_csa(csa)
           table = []
           cell_pattern = '[+-][A-Z]{2}| \* '
           csa_lines = csa.each_line.to_a
@@ -51,7 +51,6 @@ module Shogi
             end
             table << table_row
           end
-          @table = table
 
           captured = []
           csa_lines.slice(9, 2).each do |captured_line|
@@ -64,7 +63,8 @@ module Shogi
               captured << turn + cell[0]
             end
           end
-          @captured = captured
+
+          [table, captured]
         end
 
         private
