@@ -20,12 +20,7 @@ module Shogi
     attr_accessor :validate_movement
     def initialize(default_format=:csa, table=nil)
       @default_format = default_format
-      if table
-        set_from_csa(table)
-      else
-        @table = default_table
-        @captured = []
-      end
+      set_from_csa(table || default_table)
       @validate_movement = true
     end
 
@@ -49,15 +44,19 @@ module Shogi
 
     private
     def default_table
-      [["-KY", "-KE", "-GI", "-KI", "-OU", "-KI", "-GI", "-KE", "-KY"],
-       [   "", "-HI",    "",    "",    "",    "",    "", "-KA",    ""],
-       ["-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU", "-FU"],
-       [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
-       [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
-       [   "",    "",    "",    "",    "",    "",    "",    "",    ""],
-       ["+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU", "+FU"],
-       [   "", "+KA",    "",    "",    "",    "",    "", "+HI",    ""],
-       ["+KY", "+KE", "+GI", "+KI", "+OU", "+KI", "+GI", "+KE", "+KY"]]
+      <<-TABLE
+P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
+P2 * -HI *  *  *  *  * -KA * 
+P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
+P4 *  *  *  *  *  *  *  *  * 
+P5 *  *  *  *  *  *  *  *  * 
+P6 *  *  *  *  *  *  *  *  * 
+P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
+P8 * +KA *  *  *  *  * +HI * 
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+P+
+P-
+      TABLE
     end
 
     def raise_movement_error(message)
