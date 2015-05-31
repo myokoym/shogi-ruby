@@ -7,6 +7,7 @@
   * Improvements
     *  Supported Bundler.require (require "shogi-ruby").
     *  Added Board.register and Cell.register as plugin system.
+    *  Removed a deprecated method `move_from_csa`.
   * Fixes
     *  Fixed error messages.
 
