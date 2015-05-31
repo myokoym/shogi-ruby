@@ -1,5 +1,15 @@
 # NEWS
 
+## 0.0.8: 2015-05-31
+
+### Changes
+
+  * Improvements
+    *  Supported Bundler.require (require "shogi-ruby").
+    *  Added Board.register and Cell.register as plugin system.
+  * Fixes
+    *  Fixed error messages.
+
 ## 0.0.7: 2013-10-29
 
 ### Changes
