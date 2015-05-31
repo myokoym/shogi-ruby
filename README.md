@@ -1,4 +1,4 @@
-# Shogi Library by Pure Ruby [![Build Status](https://secure.travis-ci.org/myokoym/shogi-ruby.png?branch=master)](http://travis-ci.org/myokoym/shogi-ruby)
+# Shogi Library by Pure Ruby [![Build Status](https://secure.travis-ci.org/myokoym/shogi-ruby.png?branch=master)](http://travis-ci.org/myokoym/shogi-ruby) [![Gem Version](https://badge.fury.io/rb/shogi-ruby.png)](http://badge.fury.io/rb/shogi-ruby)
 
 Ruby用の将棋ライブラリです。
 
