@@ -77,7 +77,7 @@ module Shogi
             raise UndefinedPieceError, "Undefined piece: #{csa[5..6]}"
           end
 
-          if csa[1..2] == "00"
+          if hand?(csa[1..2])
             before_piece = csa[0] + csa[5..6]
             unless @captured.include?(before_piece)
               raise MoveError, "Not captured piece: #{before_piece}"
@@ -122,7 +122,7 @@ module Shogi
             raise MoveError, "Your piece exists in the cell: #{csa}"
           end
 
-          if csa[1..2] == "00"
+          if hand?(csa[1..2])
             unless after_cell == ""
               raise MoveError, "A piece exists in the cell: #{csa}"
             end
@@ -160,7 +160,7 @@ module Shogi
           end
           @table[after_y][after_x] = "#{csa[0]}#{csa[5..6]}"
 
-          if csa[1..2] == "00"
+          if hand?(csa[1..2])
             used = nil
 
             @captured.each_with_index do |captured_piece, i|
@@ -178,6 +178,10 @@ module Shogi
           end
 
           self
+        end
+
+        def hand?(position)
+          position == "00"
         end
       end
     end
