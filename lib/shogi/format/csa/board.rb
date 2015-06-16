@@ -77,43 +77,7 @@ module Shogi
             raise UndefinedPieceError, "Undefined piece: #{csa[5..6]}"
           end
 
-          if hand?(csa[1..2])
-            before_piece = csa[0] + csa[5..6]
-            unless @captured.include?(before_piece)
-              raise MoveError, "Not captured piece: #{before_piece}"
-            end
-            before_cell = before_piece
-            before_piece = Piece.const_get(before_cell[1..2]).new
-          else
-            before_x = to_array_x_from_shogi_x(csa[1].to_i)
-            before_y = to_array_y_from_shogi_y(csa[2].to_i)
-            before_cell = @table[before_y][before_x]
-            if before_cell == ""
-              raise MoveError, "Before cell is blank"
-            end
-            before_piece = Piece.const_get(before_cell[1..2]).new
-
-            unless csa[0] == before_cell[0]
-              raise MoveError, "Not your piece: #{before_cell}"
-            end
-            unless csa[5..6] == before_cell[1..2]
-              after_piece = Piece.const_get(csa[5..6]).new
-              unless before_piece.promoter == after_piece.class
-                raise MoveError, "Can't promote: #{before_cell[1..2]} -> #{csa[5..6]}"
-              end
-
-              after_y = to_array_y_from_shogi_y(csa[4].to_i)
-              if csa[0] == "+"
-                unless after_y < 3 || before_y < 3
-                  raise_movement_error("Can't promote: #{csa}")
-                end
-              else
-                unless after_y > 5 || before_y > 5
-                  raise_movement_error("Can't promote: #{csa}")
-                end
-              end
-            end
-          end
+          before_x, before_y, before_cell, before_piece, after_piece = check_move_error_for_before_piece(csa)
 
           after_x = to_array_x_from_shogi_x(csa[3].to_i)
           after_y = to_array_y_from_shogi_y(csa[4].to_i)
@@ -182,6 +146,47 @@ module Shogi
 
         def hand?(position)
           position == "00"
+        end
+
+        def check_move_error_for_before_piece(csa)
+          if hand?(csa[1..2])
+            before_piece = csa[0] + csa[5..6]
+            unless @captured.include?(before_piece)
+              raise MoveError, "Not captured piece: #{before_piece}"
+            end
+            before_cell = before_piece
+            before_piece = Piece.const_get(before_cell[1..2]).new
+          else
+            before_x = to_array_x_from_shogi_x(csa[1].to_i)
+            before_y = to_array_y_from_shogi_y(csa[2].to_i)
+            before_cell = @table[before_y][before_x]
+            if before_cell == ""
+              raise MoveError, "Before cell is blank"
+            end
+            before_piece = Piece.const_get(before_cell[1..2]).new
+
+            unless csa[0] == before_cell[0]
+              raise MoveError, "Not your piece: #{before_cell}"
+            end
+            unless csa[5..6] == before_cell[1..2]
+              after_piece = Piece.const_get(csa[5..6]).new
+              unless before_piece.promoter == after_piece.class
+                raise MoveError, "Can't promote: #{before_cell[1..2]} -> #{csa[5..6]}"
+              end
+
+              after_y = to_array_y_from_shogi_y(csa[4].to_i)
+              if csa[0] == "+"
+                unless after_y < 3 || before_y < 3
+                  raise_movement_error("Can't promote: #{csa}")
+                end
+              else
+                unless after_y > 5 || before_y > 5
+                  raise_movement_error("Can't promote: #{csa}")
+                end
+              end
+            end
+          end
+          [before_x, before_y, before_cell, before_piece, after_piece]
         end
       end
     end
