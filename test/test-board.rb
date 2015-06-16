@@ -138,6 +138,9 @@ lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL
     assert_raise Shogi::MoveError do
       assert_false(@board.move("+2827HI"))
     end
+    assert_raise Shogi::MovementError do
+      assert_false(@board.move("+2826HI"))
+    end
     assert_raise Shogi::MoveError do
       assert_false(@board.move("+2625FU"))
     end
@@ -146,6 +149,12 @@ lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL
     end
     assert_raise Shogi::MoveError do
       assert_false(@board.move("-4131KI"))
+    end
+    assert_raise Shogi::MovementError do
+      assert_false(@board.move("+8855KA"))
+    end
+    assert_raise Shogi::MovementError do
+      assert_false(@board.move("-1115KY"))
     end
 
     assert_nothing_raised do

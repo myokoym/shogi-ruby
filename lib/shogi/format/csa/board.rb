@@ -127,12 +127,22 @@ module Shogi
               raise MoveError, "A piece exists in the cell: #{csa}"
             end
           else
-            if csa[0] == "+"
-              movement_x = after_x - before_x
-              movement_y = before_y - after_y
-            else
-              movement_x = before_x - after_x
-              movement_y = after_y - before_y
+            sign = csa[0] == '+' ? 1 : -1
+            movement_x = (after_x - before_x) * sign
+            movement_y = (before_y - after_y) * sign
+
+            if (movement_x == 0 || movement_y == 0 || movement_x.abs == movement_y.abs) &&
+               [movement_x.abs, movement_y.abs].max >= 2
+              xs = (-(movement_x.abs-1)...0).map{|x| sign * (movement_x <=> 0) * x}
+              ys = (-(movement_y.abs-1)...0).map{|x| sign * (movement_y <=> 0) * x}
+              (xs.empty? ? [0] * ys.size : xs).zip(ys)
+                .map{|x, y| [csa[1].to_i + (x || 0), csa[2].to_i + (y || 0)]}
+                .each do |x, y|
+                if (1..9).include?(x) && (1..9).include?(y)
+                  piece = @table[to_array_y_from_shogi_y(y)][to_array_x_from_shogi_x(x)]
+                  raise_movement_error("Can't jump over a piece: #{piece}") if piece && !piece.empty?
+                end
+              end
             end
 
             unless before_piece.move?(movement_x, movement_y)
