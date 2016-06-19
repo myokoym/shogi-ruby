@@ -126,6 +126,14 @@ module Shogi
             unless after_cell == ""
               raise MoveError, "A piece exists in the cell: #{csa}"
             end
+            if csa[5..6] == "FU"
+              (1..9).each do |y|
+                cell = @table[to_array_y_from_shogi_y(y)][after_x]
+                if cell[1..2] == "FU" && cell[0] == csa[0]
+                  raise_movement_error("Your FU exists in the cell of the same column: #{csa[3]}#{y}")
+                end
+              end
+            end
           else
             sign = csa[0] == '+' ? 1 : -1
             movement_x = (after_x - before_x) * sign

@@ -176,6 +176,10 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 P+
 P-
     EOT
+
+    assert_raise Shogi::MovementError do
+      assert_false(@board.move("+8833UM").move("-2233KA").move("+0016FU"))
+    end
   end
 
   def test_move_csa_chain
