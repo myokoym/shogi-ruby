@@ -133,28 +133,28 @@ lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL
       @board.move("+2726AA")
     end
     assert_raise Shogi::MoveError do
-      assert_false(@board.move("+2726HI"))
+      @board.move("+2726HI")
     end
     assert_raise Shogi::MoveError do
-      assert_false(@board.move("+2827HI"))
+      @board.move("+2827HI")
     end
     assert_raise Shogi::MovementError do
-      assert_false(@board.move("+2826HI"))
+      @board.move("+2826HI")
     end
     assert_raise Shogi::MoveError do
-      assert_false(@board.move("+2625FU"))
+      @board.move("+2625FU")
     end
     assert_raise Shogi::MovementError do
-      assert_false(@board.move("+2725FU"))
+      @board.move("+2725FU")
     end
     assert_raise Shogi::MoveError do
-      assert_false(@board.move("-4131KI"))
+      @board.move("-4131KI")
     end
     assert_raise Shogi::MovementError do
-      assert_false(@board.move("+8855KA"))
+      @board.move("+8855KA")
     end
     assert_raise Shogi::MovementError do
-      assert_false(@board.move("-1115KY"))
+      @board.move("-1115KY")
     end
 
     assert_nothing_raised do
@@ -178,7 +178,7 @@ P-
     EOT
 
     assert_raise Shogi::MovementError do
-      assert_false(@board.move("+8833UM").move("-2233KA").move("+0016FU"))
+      @board.move("+8833UM").move("-2233KA").move("+0016FU")
     end
   end
 
@@ -243,7 +243,7 @@ P-00KA
     @board.move("+7776FU", :csa)
     @board.move("-3334FU", :csa)
     assert_raise Shogi::MovementError do
-      assert_false(@board.move("+2726TO", :csa))
+      @board.move("+2726TO", :csa)
     end
     assert_nothing_raised do
       @board.move("+8822UM", :csa)
