@@ -1,5 +1,18 @@
 # NEWS
 
+## 0.0.9: 2016-06-24
+
+### Changes
+
+* Improvements
+  * Improved mevement error detection. [Patch by Shigeaki Matsumura]
+  * Implemented Nifu restriction in `move_by_csa`. [Patch by Toru YAGI]
+
+### Thanks
+
+* Shigeaki Matsumura
+* Toru YAGI
+
 ## 0.0.8: 2015-05-31
 
 ### Changes
