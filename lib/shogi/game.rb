@@ -16,6 +16,11 @@ module Shogi
       @board.to_csa << turn << "\n"
     end
 
+    def to_sfen
+      t = @turn == '+' ? 'b' : 'w'
+      @board.to_usi.chomp + " #{t} " + @board.usi_captured + " #{@kifu.size}"
+    end
+
     def move(movement_lines, format=@default_format)
       movement_lines.each_line do |movement|
         movement.chomp!
