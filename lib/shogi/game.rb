@@ -18,7 +18,8 @@ module Shogi
 
     def to_sfen
       t = @turn == '+' ? 'b' : 'w'
-      @board.to_usi.chomp + " #{t} " + @board.usi_captured + " #{@kifu.size}"
+      next_num = @kifu.size + 1
+      @board.to_usi.chomp + " #{t} #{@board.usi_captured} #{next_num}"
     end
 
     def move(movement_lines, format=@default_format)
