@@ -52,7 +52,7 @@ Or install it yourself as:
 
 ## Ruby Version
 
-Ruby 2.0.0 or later.
+Ruby 2.1 or later.
 
 ## Usage
 
