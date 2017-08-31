@@ -16,11 +16,12 @@ module Shogi
       @board.to_csa << turn << "\n"
     end
 
-    def to_sfen
+    def to_usi
       t = @turn == '+' ? 'b' : 'w'
       next_num = @kifu.size + 1
       @board.to_usi.chomp + " #{t} #{@board.usi_captured} #{next_num}"
     end
+    alias_method :to_sfen, :to_usi
 
     def move(movement_lines, format=@default_format)
       movement_lines.each_line do |movement|

@@ -29,6 +29,7 @@ module Shogi
             usi_row
           }.join("/") << "\n"
         end
+        alias_method :to_sfen, :to_usi
 
         def usi_captured
           ['+', '-'].map do |prefix|
@@ -54,6 +55,7 @@ module Shogi
             return '-' if x == ''
           end
         end
+        alias_method :sfen_captured, :usi_captured
       end
     end
   end
