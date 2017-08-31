@@ -12,6 +12,7 @@
     * Added `Board#to_sfen`. (the alias of `Board#to_usi`)
     * Added `Board#usi_captured`.
     * Added `Board#sfen_captured`. (the alias of `Board#usi_captured`)
+  * Ruby 2.0.0のサポートをやめました。
 * TODO
   * SFEN（USI）形式の入力（`Board#move_by_usi`）をサポートする
 
