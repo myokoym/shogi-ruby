@@ -1,5 +1,22 @@
 # NEWS
 
+## 0.1.0: 2017-08-31
+
+### Changes
+
+* Improvements
+  * Supported SFEN (USI) output. [Patch by Shigeaki Matsumura]
+    * Added `Game#to_usi`.
+    * Added `Game#to_sfen` (the alias of `Game#to_usi`)
+    * Added `Board#to_usi`.
+    * Added `Board#to_sfen`. (the alias of `Board#to_usi`)
+    * Added `Board#usi_captured`.
+    * Added `Board#sfen_captured`. (the alias of `Board#usi_captured`)
+
+### Thanks
+
+* Shigeaki Matsumura
+
 ## 0.0.9: 2016-06-24
 
 ### Changes
